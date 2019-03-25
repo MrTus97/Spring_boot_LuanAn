@@ -3,15 +3,8 @@ package com.example.demo.dto;
 import javax.persistence.*;
 
 public class PitchTypeDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "id_owner")
     private Long id_owner;
-
-    @Column(name = "name")
     private String name;
 
     public Long getId() {
@@ -36,5 +29,14 @@ public class PitchTypeDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "PitchTypeDTO{" +
+                "id=" + id +
+                ", id_owner=" + id_owner +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

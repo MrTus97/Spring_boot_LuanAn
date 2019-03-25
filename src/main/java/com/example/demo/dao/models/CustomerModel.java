@@ -1,9 +1,10 @@
 package com.example.demo.dao.models;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "CustomerDTO")
+@Table(name = "customer")
 public class CustomerModel {
 
     @Id
@@ -35,17 +36,47 @@ public class CustomerModel {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "count_resever")
-    private String count_resever;
+    @Column(name = "count_reserve")
+    private Double count_reserve;
 
     @Column(name = "count_cancel")
-    private String count_cancel;
+    private Double count_cancel;
 
     @Column(name = "verify")
     private String verify;
 
     @Column(name = "remember_token")
     private String remember_token;
+
+    @Column(name = "avatar")
+    private String avatar;
+
+    @Column(name = "created_at")
+    private java.sql.Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private java.sql.Timestamp updateAt;
+
+    public CustomerModel() {
+    }
+
+    public CustomerModel(String name, String phone, String team_name, String level, String star, String is_block, String is_delete, String password, Double count_reserve, Double count_cancel, String verify, String remember_token, String avatar, Timestamp createdAt, Timestamp updateAt) {
+        this.name = name;
+        this.phone = phone;
+        this.team_name = team_name;
+        this.level = level;
+        this.star = star;
+        this.is_block = is_block;
+        this.is_delete = is_delete;
+        this.password = password;
+        this.count_reserve = count_reserve;
+        this.count_cancel = count_cancel;
+        this.verify = verify;
+        this.remember_token = remember_token;
+        this.avatar = avatar;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+    }
 
     public Long getId() {
         return id;
@@ -119,19 +150,19 @@ public class CustomerModel {
         this.password = password;
     }
 
-    public String getCount_resever() {
-        return count_resever;
+    public Double getCount_reserve() {
+        return count_reserve;
     }
 
-    public void setCount_resever(String count_resever) {
-        this.count_resever = count_resever;
+    public void setCount_reserve(Double count_reserve) {
+        this.count_reserve = count_reserve;
     }
 
-    public String getCount_cancel() {
+    public Double getCount_cancel() {
         return count_cancel;
     }
 
-    public void setCount_cancel(String count_cancel) {
+    public void setCount_cancel(Double count_cancel) {
         this.count_cancel = count_cancel;
     }
 
@@ -149,5 +180,29 @@ public class CustomerModel {
 
     public void setRemember_token(String remember_token) {
         this.remember_token = remember_token;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
     }
 }

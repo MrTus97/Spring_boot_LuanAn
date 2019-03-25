@@ -1,6 +1,10 @@
 package com.example.demo.dao.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.type.TypeModifier;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "pitch")
@@ -10,8 +14,13 @@ public class PitchModel {
     @Column(name = "id")
     private Long id;
 
+    @JsonIgnore
     @Column(name = "id_type")
     private Long pitchType;
+
+    @ManyToOne
+    @JoinColumn(name = "id_type", insertable = false, updatable = false)
+    private PitchTypeModel pitchTypeModel;
 
     @Column(name = "name")
     private String name;
@@ -27,6 +36,55 @@ public class PitchModel {
 
     @Column(name ="is_use")
     private String is_use;
+
+    @Column(name = "created_at")
+    private java.sql.Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private java.sql.Timestamp updateAt;
+
+    //region constructor
+
+    public PitchModel() {
+    }
+
+    public PitchModel(Long pitchType, PitchTypeModel pitchTypeModel, String name, String description, String image, Double count, String is_use, Timestamp createdAt, Timestamp updateAt) {
+        this.pitchType = pitchType;
+        this.pitchTypeModel = pitchTypeModel;
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.count = count;
+        this.is_use = is_use;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+    }
+    //endregion
+
+    //region get, set
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public PitchTypeModel getPitchTypeModel() {
+        return pitchTypeModel;
+    }
+
+    public void setPitchTypeModel(PitchTypeModel pitchTypeModel) {
+        this.pitchTypeModel = pitchTypeModel;
+    }
 
     public Long getId() {
         return id;
@@ -83,4 +141,6 @@ public class PitchModel {
     public void setIs_use(String is_use) {
         this.is_use = is_use;
     }
+
+    //endregion
 }

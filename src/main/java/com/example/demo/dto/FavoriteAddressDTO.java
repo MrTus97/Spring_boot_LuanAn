@@ -3,16 +3,18 @@ package com.example.demo.dto;
 import javax.persistence.*;
 
 public class FavoriteAddressDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
+    private OwnerDTO owner;
+    private CustomerDTO customer;
 
-    @Column(name = "id_owner")
-    private Long id_owner;
+    public FavoriteAddressDTO() {
+    }
 
-    @Column(name = "id_customer")
-    private Long id_customer;
+    public FavoriteAddressDTO(Long id, OwnerDTO owner, CustomerDTO customer) {
+        this.id = id;
+        this.owner = owner;
+        this.customer = customer;
+    }
 
     public Long getId() {
         return id;
@@ -22,19 +24,28 @@ public class FavoriteAddressDTO {
         this.id = id;
     }
 
-    public Long getId_owner() {
-        return id_owner;
+    public OwnerDTO getOwner() {
+        return owner;
     }
 
-    public void setId_owner(Long id_owner) {
-        this.id_owner = id_owner;
+    public void setOwner(OwnerDTO owner) {
+        this.owner = owner;
     }
 
-    public Long getId_customer() {
-        return id_customer;
+    public CustomerDTO getCustomer() {
+        return customer;
     }
 
-    public void setId_customer(Long id_customer) {
-        this.id_customer = id_customer;
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "FavoriteAddressDTO{" +
+                "id=" + id +
+                ", owner=" + owner +
+                ", customer=" + customer +
+                '}';
     }
 }

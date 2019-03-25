@@ -1,5 +1,6 @@
 package com.example.demo.dao.repositories;
 
+import com.example.demo.dao.models.OwnerModel;
 import com.example.demo.dao.models.PitchModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,5 +11,7 @@ import java.util.List;
 @Repository
 public interface PitchRepository extends JpaRepository<PitchModel, Long> {
     @Query(value = "select * from pitch",nativeQuery = true)
-    List<PitchModel> getAll();
+    public  List<PitchModel> getAll();
+
+
 }

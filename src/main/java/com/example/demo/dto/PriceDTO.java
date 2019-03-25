@@ -4,21 +4,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 public class PriceDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "id_type")
     private Long id_type;
-
-    @Column(name = "id_time")
     private Long id_time;
-
-    @Column(name = "price")
     private Double price;
-
-    @Column(name = "date")
     private Date date;
 
     public Long getId() {
@@ -59,5 +48,16 @@ public class PriceDTO {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "PriceDTO{" +
+                "id=" + id +
+                ", id_type=" + id_type +
+                ", id_time=" + id_time +
+                ", price=" + price +
+                ", date=" + date +
+                '}';
     }
 }

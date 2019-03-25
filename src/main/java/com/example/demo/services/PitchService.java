@@ -3,18 +3,17 @@ package com.example.demo.services;
 import com.example.demo.dao.models.PitchModel;
 import com.example.demo.dao.repositories.PitchRepository;
 import com.example.demo.dto.PitchDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PitchBookingImpl implements PitchBookingService{
-    private PitchRepository pitchRepository;
+public class PitchService implements IPitchBookingService {
 
-    public PitchBookingImpl(PitchRepository pitchRepository) {
-        this.pitchRepository = pitchRepository;
-    }
+    @Autowired
+    private PitchRepository pitchRepository;
 
     @Override
     public List<PitchDTO> getPitch() {

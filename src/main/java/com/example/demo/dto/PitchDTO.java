@@ -3,27 +3,12 @@ package com.example.demo.dto;
 import javax.persistence.*;
 
 public class PitchDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "id_type")
     private Long id_type;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "image")
     private String image;
-
-    @Column(name = "count")
     private Double count;
-
-    @Column(name ="is_use")
     private String is_use;
 
     public Long getId() {

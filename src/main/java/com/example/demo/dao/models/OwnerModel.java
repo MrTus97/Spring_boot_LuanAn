@@ -1,11 +1,13 @@
 package com.example.demo.dao.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.binding.DoubleExpression;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "OwnerDTO")
+@Table(name = "owner")
 public class OwnerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +29,9 @@ public class OwnerModel {
     @Column(name = "is_delete")
     private String is_delete;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
-
 
     @Column(name = "verify")
     private String verify;
@@ -45,6 +47,34 @@ public class OwnerModel {
 
     @Column(name = "lng")
     private Double lng;
+
+    @Column(name = "avatar")
+    private String avatar;
+    @Column(name = "created_at")
+    private java.sql.Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private java.sql.Timestamp updateAt;
+
+    public OwnerModel() {
+    }
+
+    public OwnerModel(String name, String phone, String address, String is_block, String is_delete, String password, String verify, String remember_token, String district, Double lat, Double lng, String avatar, Timestamp createdAt, Timestamp updateAt) {
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.is_block = is_block;
+        this.is_delete = is_delete;
+        this.password = password;
+        this.verify = verify;
+        this.remember_token = remember_token;
+        this.district = district;
+        this.lat = lat;
+        this.lng = lng;
+        this.avatar = avatar;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+    }
 
     public Long getId() {
         return id;
@@ -141,4 +171,5 @@ public class OwnerModel {
     public void setLng(Double lng) {
         this.lng = lng;
     }
+
 }

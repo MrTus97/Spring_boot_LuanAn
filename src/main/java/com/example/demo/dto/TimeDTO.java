@@ -5,15 +5,8 @@ import javax.persistence.*;
 import java.sql.Time;
 
 public class TimeDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "starttime")
     private java.sql.Time start_time;
-
-    @Column(name = "endtime")
     private java.sql.Time end_time;
 
     public Long getId() {
@@ -38,5 +31,14 @@ public class TimeDTO {
 
     public void setEnd_time(java.sql.Time end_time) {
         this.end_time = end_time;
+    }
+
+    @Override
+    public String toString() {
+        return "TimeDTO{" +
+                "id=" + id +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
+                '}';
     }
 }

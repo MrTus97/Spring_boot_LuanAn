@@ -3,18 +3,9 @@ package com.example.demo.dto;
 import javax.persistence.*;
 
 public class DistrictDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "lat")
     private Double lat;
-
-    @Column(name = "lng")
     private Double lng;
 
     public Long getId() {

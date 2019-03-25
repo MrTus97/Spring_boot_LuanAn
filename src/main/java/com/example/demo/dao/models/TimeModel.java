@@ -3,6 +3,7 @@ package com.example.demo.dao.models;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "time")
@@ -17,6 +18,22 @@ public class TimeModel {
 
     @Column(name = "endtime")
     private Time end_time;
+
+    @Column(name = "created_at")
+    private java.sql.Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private java.sql.Timestamp updateAt;
+
+    public TimeModel(Time start_time, Time end_time, Timestamp createdAt, Timestamp updateAt) {
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+    }
+
+    public TimeModel() {
+    }
 
     public Long getId() {
         return id;

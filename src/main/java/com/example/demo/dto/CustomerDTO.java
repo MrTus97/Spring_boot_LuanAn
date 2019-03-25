@@ -3,47 +3,38 @@ package com.example.demo.dto;
 import javax.persistence.*;
 
 public class CustomerDTO {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "phone")
     private String phone;
-
-    @Column(name = "team_name")
     private String team_name;
-
-    @Column(name = "level")
     private String level;
-
-    @Column(name = "star")
     private String star;
-
-    @Column(name = "is_block")
     private String is_block;
-
-    @Column(name = "is_delete")
     private String is_delete;
-
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "count_resever")
-    private String count_resever;
-
-    @Column(name = "count_cancel")
+    private String count_reserve;
     private String count_cancel;
-
-    @Column(name = "verify")
     private String verify;
-
-    @Column(name = "remember_token")
     private String remember_token;
+
+    public CustomerDTO() {
+    }
+
+    public CustomerDTO(Long id, String name, String phone, String team_name, String level, String star, String is_block, String is_delete, String password, String count_reserve, String count_cancel, String verify, String remember_token) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.team_name = team_name;
+        this.level = level;
+        this.star = star;
+        this.is_block = is_block;
+        this.is_delete = is_delete;
+        this.password = password;
+        this.count_reserve = count_reserve;
+        this.count_cancel = count_cancel;
+        this.verify = verify;
+        this.remember_token = remember_token;
+    }
 
     public Long getId() {
         return id;
@@ -117,12 +108,12 @@ public class CustomerDTO {
         this.password = password;
     }
 
-    public String getCount_resever() {
-        return count_resever;
+    public String getCount_reserve() {
+        return count_reserve;
     }
 
-    public void setCount_resever(String count_resever) {
-        this.count_resever = count_resever;
+    public void setCount_reserve(String count_reserve) {
+        this.count_reserve = count_reserve;
     }
 
     public String getCount_cancel() {
@@ -147,5 +138,24 @@ public class CustomerDTO {
 
     public void setRemember_token(String remember_token) {
         this.remember_token = remember_token;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", team_name='" + team_name + '\'' +
+                ", level='" + level + '\'' +
+                ", star='" + star + '\'' +
+                ", is_block='" + is_block + '\'' +
+                ", is_delete='" + is_delete + '\'' +
+                ", password='" + password + '\'' +
+                ", count_reserve='" + count_reserve + '\'' +
+                ", count_cancel='" + count_cancel + '\'' +
+                ", verify='" + verify + '\'' +
+                ", remember_token='" + remember_token + '\'' +
+                '}';
     }
 }

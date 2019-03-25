@@ -3,18 +3,9 @@ package com.example.demo.dto;
 import javax.persistence.*;
 
 public class BannerReserveDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "id_owner")
     private Long id_owner;
-
-    @Column(name = "id_customer")
     private Long id_customer;
-
-    @Column(name = "description")
     private String description;
 
     public Long getId() {
@@ -47,5 +38,15 @@ public class BannerReserveDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "BannerReserveDTO{" +
+                "id=" + id +
+                ", id_owner=" + id_owner +
+                ", id_customer=" + id_customer +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

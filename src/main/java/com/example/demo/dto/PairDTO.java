@@ -4,27 +4,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 public class PairDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "id_customer")
     private Long id_customer;
-
-    @Column(name = "id_time")
     private Long id_time;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "status")
     private String status;
-
-    @Column(name = "date")
     private Date date;
-
-    @Column(name = "is_verify")
     private String is_verify;
 
     public Long getId() {
@@ -81,5 +66,18 @@ public class PairDTO {
 
     public void setIs_verify(String is_verify) {
         this.is_verify = is_verify;
+    }
+
+    @Override
+    public String toString() {
+        return "PairDTO{" +
+                "id=" + id +
+                ", id_customer=" + id_customer +
+                ", id_time=" + id_time +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", date=" + date +
+                ", is_verify='" + is_verify + '\'' +
+                '}';
     }
 }

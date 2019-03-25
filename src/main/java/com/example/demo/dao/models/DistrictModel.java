@@ -1,6 +1,7 @@
 package com.example.demo.dao.models;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "district")
@@ -50,4 +51,10 @@ public class DistrictModel {
     public void setLng(Double lng) {
         this.lng = lng;
     }
+
+    @Column(name = "created_at")
+    private java.sql.Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private java.sql.Timestamp updateAt;
 }

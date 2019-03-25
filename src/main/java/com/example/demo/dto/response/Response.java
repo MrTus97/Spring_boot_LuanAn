@@ -1,24 +1,24 @@
 package com.example.demo.dto.response;
 
 public class Response<T> {
-    private boolean success = true;
+    private int success;
     private T data;
     private String message;
 
     public Response() {
     }
 
-    public Response(boolean success, T data, String message) {
+    public Response(int success, T data, String message) {
         this.success = success;
         this.data = data;
         this.message = message;
     }
 
-    public boolean isSuccess() {
+    public int isSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+    public void setSuccess(int success) {
         this.success = success;
     }
 

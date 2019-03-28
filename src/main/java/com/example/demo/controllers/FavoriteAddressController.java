@@ -1,14 +1,13 @@
 package com.example.demo.controllers;
 
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.FavoriteAddressDTO;
 import com.example.demo.dto.response.Response;
 import com.example.demo.services.FavoriteAddressService;
 import com.example.demo.services.IFavoriteAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +19,10 @@ public class FavoriteAddressController {
     @GetMapping(value = "/get-favorite-by-id-customer")
     public Response getFavoriteById(@RequestParam Long idUser, @RequestHeader String token){
         return new Response(200,favoriteAddressService.getFavoriteByIdCustomer(token,idUser),"OK");
+    }
+
+    @PostMapping(value = "/favorite-owner",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Response favoriteOwner(@RequestBody Long idUser, @RequestBody Long idOwner){
+        return new Response(ResultCode.success, favoriteAddressService.favoriteOwner(idUser, idOwner),"OK");
     }
 }

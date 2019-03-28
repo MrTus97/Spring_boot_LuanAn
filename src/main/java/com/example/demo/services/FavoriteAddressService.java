@@ -30,10 +30,14 @@ public class FavoriteAddressService implements IFavoriteAddressService {
         for (FavoriteAddressModel favoriteAddressModel : favoriteAddressModels){
             FavoriteAddressDTO favoriteAddressDTO = new FavoriteAddressDTO();
             favoriteAddressDTO = modelMapper.map(favoriteAddressModel,favoriteAddressDTO.getClass());
-//            favoriteAddressDTO.setId(favoriteAddressModel.getId());
-//            favoriteAddressDTO.setOwner(new OwnerDTO("abc","ffkdk"));
             favoriteAddressDTOS.add(favoriteAddressDTO);
         }
         return  favoriteAddressDTOS;
+    }
+
+    @Override
+    public boolean favoriteOwner(Long idUser, Long idOwner) {
+        return favoriteAddressRepository.addFavoriteAddress(idOwner,idUser);
+
     }
 }

@@ -1,6 +1,11 @@
 package com.example.demo.dto;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDTO {
     private Long id;
@@ -157,5 +162,13 @@ public class CustomerDTO {
                 ", verify='" + verify + '\'' +
                 ", remember_token='" + remember_token + '\'' +
                 '}';
+    }
+
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+//        for (String role : roles) {
+//            authorities.add(new SimpleGrantedAuthority(role));
+//        }
+        return authorities;
     }
 }

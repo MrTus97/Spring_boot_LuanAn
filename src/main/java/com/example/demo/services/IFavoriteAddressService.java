@@ -10,5 +10,7 @@ import java.util.List;
 public interface IFavoriteAddressService {
     public List<FavoriteAddressDTO> getFavoriteByIdCustomer(String token, Long idUser);
     public List<FavoriteAddressDTO> convertModelToDTO(List<FavoriteAddressModel> list);
+
+    public boolean favoriteOwner(Long idUser, Long idOwner);
 }
 

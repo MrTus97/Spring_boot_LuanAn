@@ -12,4 +12,7 @@ import java.util.List;
 public interface FavoriteAddressRepository extends JpaRepository<FavoriteAddressModel, Long> {
     @Query(value = "select * from favorite_address where id_customer=?1 ",nativeQuery = true)
     public List<FavoriteAddressModel> getFavoriteAddressModelByIdCustomer(Long id);
+
+    @Query(value = "insert into favorite_address values (?1,?2)",nativeQuery = true)
+    public boolean addFavoriteAddress(Long idOwner,Long idCustomer);
 }

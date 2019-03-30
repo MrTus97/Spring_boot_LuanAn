@@ -1,5 +1,7 @@
 package com.example.demo.dao.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -33,6 +35,7 @@ public class CustomerModel {
     @Column(name = "is_delete")
     private String is_delete;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 

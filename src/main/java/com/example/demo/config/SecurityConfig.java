@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import com.example.demo.rest.CustomAccessDeniedHandler;
 import com.example.demo.rest.RestAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -36,14 +37,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     protected void configure(HttpSecurity http) throws Exception {
         // Disable crsf cho đường dẫn /rest/**
-        http.csrf().ignoringAntMatchers("/rest/**");
-        http.authorizeRequests().antMatchers("/rest/login**").permitAll();
-        http.antMatcher("/rest/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/rest/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST, "/rest/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.DELETE, "/rest/**").access("hasRole('ROLE_ADMIN')").and()
-                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+        http.csrf().ignoringAntMatchers("/common/**");
+        http.authorizeRequests().antMatchers("/common/login**").permitAll();
+//        http.antMatcher("/rest/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+//                .antMatchers(HttpMethod.GET, "/rest/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+//                .antMatchers(HttpMethod.POST, "/rest/**").access("hasRole('ROLE_ADMIN')")
+//                .antMatchers(HttpMethod.DELETE, "/rest/**").access("hasRole('ROLE_ADMIN')").and()
+//                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+//        http.csrf().disable().
+//                sessionManagement().
+//                sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+//                and().
+//                authorizeRequests().
+//                antMatchers(HttpMethod.GET, "/common/**").permitAll().
+//                antMatchers(HttpMethod.GET, "/**").authenticated().
+//                antMatchers(HttpMethod.POST, "/**").authenticated();
+
     }
 }

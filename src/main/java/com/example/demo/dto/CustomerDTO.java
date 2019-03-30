@@ -164,11 +164,11 @@ public class CustomerDTO {
                 '}';
     }
 
-    public List<GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//        for (String role : roles) {
-//            authorities.add(new SimpleGrantedAuthority(role));
-//        }
-        return authorities;
-    }
+//    public List<GrantedAuthority> getAuthorities() {
+//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+////        for (String role : roles) {
+////            authorities.add(new SimpleGrantedAuthority(role));
+////        }
+//        return authorities;
+//    }
 }

@@ -12,7 +12,7 @@ public class DistrictController {
     @Autowired
     private IDistrictService districtService;
 
-    @GetMapping(value = "/get-all-district")
+    @GetMapping(value = "/common/get-all-district")
     public Response getAllDistrict(){
         return new Response(ResultCode.success, districtService.getAllDistrict(),"OK");
     }

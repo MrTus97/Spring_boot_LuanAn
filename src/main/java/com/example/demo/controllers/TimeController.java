@@ -16,4 +16,6 @@ public class TimeController {
     public Response getAllTime(){
         return new Response(ResultCode.success,timeService.getAllTime(),"OK");
     }
+
+
 }

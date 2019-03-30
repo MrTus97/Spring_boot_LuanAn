@@ -1,7 +1,10 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
+@JsonIgnoreProperties(value = "customer")
 public class FavoriteAddressDTO {
     private Long id;
     private OwnerDTO owner;

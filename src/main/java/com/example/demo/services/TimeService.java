@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TimeService implements ITimeService{
+public class TimeService{
     @Autowired
     private TimeRepository timeRepository;
 
@@ -19,13 +19,12 @@ public class TimeService implements ITimeService{
     private ModelMapper modelMapper;
 
 
-    @Override
+
     public List<TimeDTO> getAllTime() {
         List<TimeModel> timeModels = timeRepository.getAllTime();
         return convertModelToDTO(timeModels);
     }
 
-    @Override
     public List<TimeDTO> convertModelToDTO(List<TimeModel> list) {
         List<TimeDTO> timeDTOS = new ArrayList<>();
         for (TimeModel timeModel:list){

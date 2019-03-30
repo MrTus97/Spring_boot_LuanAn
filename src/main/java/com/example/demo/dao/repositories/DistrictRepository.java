@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface DistrictRepository extends JpaRepository<DistrictModel, Long> {
     public List<DistrictModel> getAllBy();
+
 }

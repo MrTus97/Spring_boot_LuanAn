@@ -24,13 +24,14 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
     private JwtService jwtService;
     @Autowired
     private CustomerService customerService;
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String authToken = httpRequest.getHeader(TOKEN_HEADER);
         if (jwtService.validateTokenLogin(authToken)) {
-            String phone = jwtService.getUsernameFromToken(authToken);
+            String phone = jwtService.getPhoneFromToken(authToken);
             CustomerDTO customerDTO = customerService.loadUserByPhone(phone);
             if (customerDTO != null) {
                 boolean enabled = true;
@@ -38,7 +39,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
                 boolean credentialsNonExpired = true;
                 boolean accountNonLocked = true;
                 UserDetails userDetail = new User(phone, customerDTO.getPassword(), enabled, accountNonExpired,
-                        credentialsNonExpired, accountNonLocked,null);
+                        credentialsNonExpired, accountNonLocked,customerDTO.getAuthorities());
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail,
                         null, userDetail.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));

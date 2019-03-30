@@ -11,20 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DistrictService implements IDistrictService {
+public class DistrictService{
     @Autowired
     private DistrictRepository districtRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    @Override
+
     public List<DistrictDTO> getAllDistrict() {
         List<DistrictModel> districtModels = districtRepository.getAllBy();
         return convertModelToDTO(districtModels);
     }
 
-    @Override
     public List<DistrictDTO> convertModelToDTO(List<DistrictModel> districtModels) {
         List<DistrictDTO> districtDTOS = new ArrayList<>();
         for (DistrictModel districtModel: districtModels){

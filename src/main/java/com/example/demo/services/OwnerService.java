@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OwnerService implements IOwnerService{
+public class OwnerService{
 
     @Autowired
     private OwnerRepository ownerRepository;
@@ -40,7 +40,6 @@ public class OwnerService implements IOwnerService{
         return convertModelToDTO(ownerModels);
     }
 
-    @Override
     public List<OwnerDTO> getOwnerByDistrict(String district) {
         List<OwnerModel> ownerModels = ownerRepository.getOwnerModelByDistrict(district);
         return convertModelToDTO(ownerModels);

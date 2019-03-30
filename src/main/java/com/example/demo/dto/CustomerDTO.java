@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -7,6 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(value = "authorities")
 public class CustomerDTO {
     private Long id;
     private String name;
@@ -16,6 +19,8 @@ public class CustomerDTO {
     private String star;
     private String is_block;
     private String is_delete;
+
+    @JsonIgnore
     private String password;
     private String count_reserve;
     private String count_cancel;
@@ -156,7 +161,6 @@ public class CustomerDTO {
                 ", star='" + star + '\'' +
                 ", is_block='" + is_block + '\'' +
                 ", is_delete='" + is_delete + '\'' +
-                ", password='" + password + '\'' +
                 ", count_reserve='" + count_reserve + '\'' +
                 ", count_cancel='" + count_cancel + '\'' +
                 ", verify='" + verify + '\'' +
@@ -164,11 +168,9 @@ public class CustomerDTO {
                 '}';
     }
 
-//    public List<GrantedAuthority> getAuthorities() {
-//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-////        for (String role : roles) {
-////            authorities.add(new SimpleGrantedAuthority(role));
-////        }
-//        return authorities;
-//    }
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+        return authorities;
+    }
 }

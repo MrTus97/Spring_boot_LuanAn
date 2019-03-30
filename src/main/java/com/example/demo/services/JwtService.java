@@ -27,10 +27,7 @@ public class JwtService {
             builder.expirationTime(generateExpirationDate());
             JWTClaimsSet claimsSet = builder.build();
             SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
-            // Apply the HMAC protection
             signedJWT.sign(signer);
-            // Serialize to compact form, produces something like
-            // eyJhbGciOiJIUzI1NiJ9.SGVsbG8sIHdvcmxkIQ.onO9Ihudz3WkiauDO2Uhyuz0Y18UASXlSc1eS0NkWyA
             token = signedJWT.serialize();
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +56,7 @@ public class JwtService {
         expiration = claims.getExpirationTime();
         return expiration;
     }
-    public String getUsernameFromToken(String token) {
+    public String getPhoneFromToken(String token) {
         String phone = null;
         try {
             JWTClaimsSet claims = getClaimsFromToken(token);
@@ -69,6 +66,7 @@ public class JwtService {
         }
         return phone;
     }
+
     private byte[] generateShareSecret() {
         // Generate 256-bit (32-byte) shared secret
         byte[] sharedSecret = new byte[32];
@@ -83,7 +81,7 @@ public class JwtService {
         if (token == null || token.trim().length() == 0) {
             return false;
         }
-        String username = getUsernameFromToken(token);
+        String username = getPhoneFromToken(token);
         if (username == null || username.isEmpty()) {
             return false;
         }

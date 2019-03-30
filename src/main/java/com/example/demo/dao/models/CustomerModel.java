@@ -60,6 +60,8 @@ public class CustomerModel {
     @Column(name = "updated_at")
     private java.sql.Timestamp updateAt;
 
+
+
     public CustomerModel() {
     }
 

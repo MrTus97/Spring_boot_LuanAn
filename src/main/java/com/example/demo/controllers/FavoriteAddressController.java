@@ -1,28 +1,45 @@
 package com.example.demo.controllers;
 
 import com.example.demo.define.ResultCode;
-import com.example.demo.dto.FavoriteAddressDTO;
 import com.example.demo.dto.response.Response;
 import com.example.demo.services.FavoriteAddressService;
-import com.example.demo.services.IFavoriteAddressService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class FavoriteAddressController {
     @Autowired
-    private IFavoriteAddressService favoriteAddressService;
+    private FavoriteAddressService favoriteAddressService;
 
-    @GetMapping(value = "/get-favorite-by-id-customer")
-    public Response getFavoriteById(@RequestParam Long idUser, @RequestHeader String token){
-        return new Response(200,favoriteAddressService.getFavoriteByIdCustomer(token,idUser),"OK");
+    /**
+     * Lấy danh sách favorite address dựa vào id customer
+     * @param idCustomer
+     * @return
+     */
+    @GetMapping(value = "/personal/get-favorite-by-id-customer")
+    public Response getFavoriteByIdCustomer(@RequestParam Long idCustomer){
+        return new Response(200,favoriteAddressService.getFavoriteByIdCustomer(idCustomer),"OK");
     }
 
-    @PostMapping(value = "/favorite-owner",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public Response favoriteOwner(@RequestBody Long idUser, @RequestBody Long idOwner){
-        return new Response(ResultCode.success, favoriteAddressService.favoriteOwner(idUser, idOwner),"OK");
+    /**
+     * Yêu thích một sân nào đó
+     * @param idCustomer
+     * @param idOwner
+     * @return
+     */
+    @PostMapping(value = "/personal/favorite-owner")
+    public Response favoriteOwner(
+            @ApiParam("idUser") @RequestParam Long idCustomer,
+            @ApiParam("idOwner")@RequestParam Long idOwner){
+        return new Response(ResultCode.success, favoriteAddressService.favoriteOwner(idCustomer, idOwner),"OK");
     }
+
+    @DeleteMapping(value = "/personal/un-favorite-owner")
+    public Response unFavoriteOwner(
+        @ApiParam("idFavorite") @RequestParam Long idFavorite
+    ){
+        return new Response(ResultCode.success,favoriteAddressService.unFavoriteOwner(idFavorite),"OK");
+    }
+
 }

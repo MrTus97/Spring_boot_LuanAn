@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PitchService implements IPitchBookingService {
+public class PitchService{
 
     @Autowired
     private PitchRepository pitchRepository;
 
-    @Override
     public List<PitchDTO> getPitch() {
         List<PitchModel> pitchModels = pitchRepository.getAll();
         List<PitchDTO> pitchDTOS = new ArrayList<>();

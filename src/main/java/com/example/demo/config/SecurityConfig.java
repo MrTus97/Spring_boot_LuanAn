@@ -36,24 +36,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
     protected void configure(HttpSecurity http) throws Exception {
-        // Disable crsf cho đường dẫn /rest/**
         http.csrf().ignoringAntMatchers("/common/**");
+        http.csrf().ignoringAntMatchers("/personal/**");
         http.authorizeRequests().antMatchers("/common/login**").permitAll();
-//        http.antMatcher("/rest/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/rest/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-//                .antMatchers(HttpMethod.POST, "/rest/**").access("hasRole('ROLE_ADMIN')")
-//                .antMatchers(HttpMethod.DELETE, "/rest/**").access("hasRole('ROLE_ADMIN')").and()
-//                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-//        http.csrf().disable().
-//                sessionManagement().
-//                sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-//                and().
-//                authorizeRequests().
-//                antMatchers(HttpMethod.GET, "/common/**").permitAll().
-//                antMatchers(HttpMethod.GET, "/**").authenticated().
-//                antMatchers(HttpMethod.POST, "/**").authenticated();
-
+        http.antMatcher("/personal/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/personal/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.POST, "/personal/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.DELETE, "/personal/**").access("hasRole('ROLE_CUSTOMER')")
+                .and()
+                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
     }
 }

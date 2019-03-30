@@ -18,6 +18,12 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    /**
+     * Đăng nhập với phone và mật khẩu
+     * @param phone
+     * @param password
+     * @return Token và chi tiết customer
+     */
     @PostMapping(value = "/common/login")
     public Response login(@ApiParam("phone") @RequestParam String phone, @ApiParam("password") @RequestParam String password){
         return new Response(ResultCode.success,customerService.checkLogin(phone,password),"OK");

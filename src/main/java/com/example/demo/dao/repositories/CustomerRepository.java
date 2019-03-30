@@ -10,4 +10,6 @@ public interface CustomerRepository extends JpaRepository<CustomerModel, Long> {
     public CustomerModel getByPhone(String phone);
 
     CustomerModel getByPhoneAndPassword(String phone, String password);
+
+    CustomerModel getById(Long id);
 }

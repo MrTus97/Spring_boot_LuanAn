@@ -50,6 +50,9 @@ public class OwnerModel {
 
     @Column(name = "avatar")
     private String avatar;
+
+    @Column(name = "description")
+    private String description;
     @Column(name = "created_at")
     private java.sql.Timestamp createdAt;
 
@@ -59,7 +62,7 @@ public class OwnerModel {
     public OwnerModel() {
     }
 
-    public OwnerModel(String name, String phone, String address, String is_block, String is_delete, String password, String verify, String remember_token, String district, Double lat, Double lng, String avatar, Timestamp createdAt, Timestamp updateAt) {
+    public OwnerModel(String name, String phone, String address, String is_block, String is_delete, String password, String verify, String remember_token, String district, Double lat, Double lng, String avatar, String description, Timestamp createdAt, Timestamp updateAt) {
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -72,6 +75,7 @@ public class OwnerModel {
         this.lat = lat;
         this.lng = lng;
         this.avatar = avatar;
+        this.description = description;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
     }
@@ -172,4 +176,35 @@ public class OwnerModel {
         this.lng = lng;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
 }

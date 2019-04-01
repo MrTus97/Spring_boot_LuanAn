@@ -1,16 +1,40 @@
 package com.example.demo.dto;
 
+import com.example.demo.dao.models.CustomerModel;
+import com.example.demo.dao.models.TimeModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class PairDTO {
     private Long id;
-    private Long id_customer;
-    private Long id_time;
+    private CustomerModel customerModel;
+    private TimeModel timeModel;
     private String description;
     private String status;
+    private String pair;
     private Date date;
     private String is_verify;
+    private java.sql.Timestamp createdAt;
+    private java.sql.Timestamp updateAt;
+
+    public PairDTO() {
+    }
+
+    public PairDTO(Long id, CustomerModel customerModel, TimeModel timeModel, String description, String status, Date date, String is_verify, Timestamp createdAt, Timestamp updateAt, String pair) {
+        this.id = id;
+        this.customerModel = customerModel;
+        this.timeModel = timeModel;
+        this.description = description;
+        this.status = status;
+        this.date = date;
+        this.is_verify = is_verify;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.pair = pair;
+    }
 
     public Long getId() {
         return id;
@@ -20,20 +44,20 @@ public class PairDTO {
         this.id = id;
     }
 
-    public Long getId_customer() {
-        return id_customer;
+    public CustomerModel getCustomerModel() {
+        return customerModel;
     }
 
-    public void setId_customer(Long id_customer) {
-        this.id_customer = id_customer;
+    public void setCustomerModel(CustomerModel customerModel) {
+        this.customerModel = customerModel;
     }
 
-    public Long getId_time() {
-        return id_time;
+    public TimeModel getTimeModel() {
+        return timeModel;
     }
 
-    public void setId_time(Long id_time) {
-        this.id_time = id_time;
+    public void setTimeModel(TimeModel timeModel) {
+        this.timeModel = timeModel;
     }
 
     public String getDescription() {
@@ -52,6 +76,14 @@ public class PairDTO {
         this.status = status;
     }
 
+    public String getPair() {
+        return pair;
+    }
+
+    public void setPair(String pair) {
+        this.pair = pair;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -68,16 +100,19 @@ public class PairDTO {
         this.is_verify = is_verify;
     }
 
-    @Override
-    public String toString() {
-        return "PairDTO{" +
-                "id=" + id +
-                ", id_customer=" + id_customer +
-                ", id_time=" + id_time +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", date=" + date +
-                ", is_verify='" + is_verify + '\'' +
-                '}';
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
     }
 }

@@ -3,18 +3,18 @@ package com.example.demo.dao.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 @Table(name = "pair")
-public class PairModel {
+public class PairModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @JsonIgnore
     @Column(name = "id_customer")
     private Long id_customer;
 
@@ -22,7 +22,6 @@ public class PairModel {
     @JoinColumn(name = "id_customer", insertable = false, updatable = false)
     private CustomerModel customerModel;
 
-    @JsonIgnore
     @Column(name = "id_time")
     private Long id_time;
 
@@ -51,27 +50,22 @@ public class PairModel {
     @Column(name = "updated_at")
     private java.sql.Timestamp updateAt;
 
-    //region constructor
     public PairModel() {
     }
 
-    public PairModel(Long id_customer, CustomerModel customerModel, Long id_time, TimeModel timeModel, String description, String status, String pair, Date date, String is_verify, Timestamp createdAt, Timestamp updateAt) {
+    public PairModel(Long id_customer, CustomerModel customerModel, Long id_time, TimeModel timeModel, String description, String status, Date date, String is_verify, Timestamp createdAt, Timestamp updateAt, String pair) {
         this.id_customer = id_customer;
         this.customerModel = customerModel;
         this.id_time = id_time;
         this.timeModel = timeModel;
         this.description = description;
         this.status = status;
-        this.pair = pair;
         this.date = date;
         this.is_verify = is_verify;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+        this.pair = pair;
     }
-
-    //endregion
-
-    //region Get, set
 
     public Long getId() {
         return id;
@@ -129,6 +123,14 @@ public class PairModel {
         this.status = status;
     }
 
+    public String getPair() {
+        return pair;
+    }
+
+    public void setPair(String pair) {
+        this.pair = pair;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -160,14 +162,4 @@ public class PairModel {
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
     }
-
-    public String getPair() {
-        return pair;
-    }
-
-    public void setPair(String pair) {
-        this.pair = pair;
-    }
-
-    //endregion
 }

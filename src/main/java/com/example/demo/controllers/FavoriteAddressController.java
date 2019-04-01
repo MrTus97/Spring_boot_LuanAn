@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 public class FavoriteAddressController {
     @Autowired
@@ -18,7 +20,8 @@ public class FavoriteAddressController {
      * @return
      */
     @GetMapping(value = "/personal/get-favorite-by-id-customer")
-    public Response getFavoriteByIdCustomer(@RequestParam Long idCustomer){
+    public Response getFavoriteByIdCustomer(@RequestParam Long idCustomer
+    ){
         return new Response(200,favoriteAddressService.getFavoriteByIdCustomer(idCustomer),"OK");
     }
 

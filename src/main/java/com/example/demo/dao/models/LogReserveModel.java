@@ -55,10 +55,152 @@ public class LogReserveModel {
     @JoinColumn(name = "id_customer", insertable = false, updatable = false)
     private CustomerModel customerModel;
 
+    @Column(name = "week_amount")
+    private double week_amount;
+
     @Column(name = "created_at")
     private java.sql.Timestamp createdAt;
 
     @Column(name = "updated_at")
     private java.sql.Timestamp updateAt;
 
+    public LogReserveModel() {
+    }
+
+    public LogReserveModel(Long id_price, Long id_pitch, Long id_time, Long id_customer, String type, String status, Date date, PriceModel priceModel, PitchModel pitchModel, TimeModel timeModel, CustomerModel customerModel, double week_amount, Timestamp createdAt, Timestamp updateAt) {
+        this.id_price = id_price;
+        this.id_pitch = id_pitch;
+        this.id_time = id_time;
+        this.id_customer = id_customer;
+        this.type = type;
+        this.status = status;
+        this.date = date;
+        this.priceModel = priceModel;
+        this.pitchModel = pitchModel;
+        this.timeModel = timeModel;
+        this.customerModel = customerModel;
+        this.week_amount = week_amount;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId_price() {
+        return id_price;
+    }
+
+    public void setId_price(Long id_price) {
+        this.id_price = id_price;
+    }
+
+    public Long getId_pitch() {
+        return id_pitch;
+    }
+
+    public void setId_pitch(Long id_pitch) {
+        this.id_pitch = id_pitch;
+    }
+
+    public Long getId_time() {
+        return id_time;
+    }
+
+    public void setId_time(Long id_time) {
+        this.id_time = id_time;
+    }
+
+    public Long getId_customer() {
+        return id_customer;
+    }
+
+    public void setId_customer(Long id_customer) {
+        this.id_customer = id_customer;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public PriceModel getPriceModel() {
+        return priceModel;
+    }
+
+    public void setPriceModel(PriceModel priceModel) {
+        this.priceModel = priceModel;
+    }
+
+    public PitchModel getPitchModel() {
+        return pitchModel;
+    }
+
+    public void setPitchModel(PitchModel pitchModel) {
+        this.pitchModel = pitchModel;
+    }
+
+    public TimeModel getTimeModel() {
+        return timeModel;
+    }
+
+    public void setTimeModel(TimeModel timeModel) {
+        this.timeModel = timeModel;
+    }
+
+    public CustomerModel getCustomerModel() {
+        return customerModel;
+    }
+
+    public void setCustomerModel(CustomerModel customerModel) {
+        this.customerModel = customerModel;
+    }
+
+    public double getWeek_amount() {
+        return week_amount;
+    }
+
+    public void setWeek_amount(double week_amount) {
+        this.week_amount = week_amount;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
 }

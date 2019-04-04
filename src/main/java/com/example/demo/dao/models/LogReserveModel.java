@@ -203,4 +203,21 @@ public class LogReserveModel {
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
     }
+
+    @Override
+    public String toString() {
+        return "LogReserveModel{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", date=" + date +
+                ", priceModel=" + priceModel +
+                ", pitchModel=" + pitchModel +
+                ", timeModel=" + timeModel +
+                ", customerModel=" + customerModel +
+                ", week_amount=" + week_amount +
+                ", createdAt=" + createdAt +
+                ", updateAt=" + updateAt +
+                '}';
+    }
 }

@@ -1,30 +1,37 @@
 package com.example.demo.dto;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class LogReserveDTO {
     private Long id;
-    private Long id_price;
-    private Long id_pitch;
-    private Long id_time;
-    private Long id_customer;
     private String type;
     private String status;
     private Date date;
+    private PriceDTO priceDTO;
+    private PitchDTO pitchDTO;
+    private TimeDTO timeDTO;
+    private CustomerDTO customerDTO;
+    private double week_amount;
+    private java.sql.Timestamp createdAt;
+    private java.sql.Timestamp updateAt;
 
-    @Override
-    public String toString() {
-        return "LogReserveDTO{" +
-                "id=" + id +
-                ", id_price=" + id_price +
-                ", id_pitch=" + id_pitch +
-                ", id_time=" + id_time +
-                ", id_customer=" + id_customer +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", date=" + date +
-                '}';
+    public LogReserveDTO() {
+    }
+
+    public LogReserveDTO(Long id, String type, String status, Date date, PriceDTO priceDTO, PitchDTO pitchDTO, TimeDTO timeDTO, CustomerDTO customerDTO, double week_amount, Timestamp createdAt, Timestamp updateAt) {
+        this.id = id;
+        this.type = type;
+        this.status = status;
+        this.date = date;
+        this.priceDTO = priceDTO;
+        this.pitchDTO = pitchDTO;
+        this.timeDTO = timeDTO;
+        this.customerDTO = customerDTO;
+        this.week_amount = week_amount;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
     }
 
     public Long getId() {
@@ -33,38 +40,6 @@ public class LogReserveDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getId_price() {
-        return id_price;
-    }
-
-    public void setId_price(Long id_price) {
-        this.id_price = id_price;
-    }
-
-    public Long getId_pitch() {
-        return id_pitch;
-    }
-
-    public void setId_pitch(Long id_pitch) {
-        this.id_pitch = id_pitch;
-    }
-
-    public Long getId_time() {
-        return id_time;
-    }
-
-    public void setId_time(Long id_time) {
-        this.id_time = id_time;
-    }
-
-    public Long getId_customer() {
-        return id_customer;
-    }
-
-    public void setId_customer(Long id_customer) {
-        this.id_customer = id_customer;
     }
 
     public String getType() {
@@ -89,5 +64,78 @@ public class LogReserveDTO {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public PriceDTO getPriceDTO() {
+        return priceDTO;
+    }
+
+    public void setPriceDTO(PriceDTO priceDTO) {
+        this.priceDTO = priceDTO;
+    }
+
+    public PitchDTO getPitchDTO() {
+        return pitchDTO;
+    }
+
+    public void setPitchDTO(PitchDTO pitchDTO) {
+        this.pitchDTO = pitchDTO;
+    }
+
+    public TimeDTO getTimeDTO() {
+        return timeDTO;
+    }
+
+    public void setTimeDTO(TimeDTO timeDTO) {
+        this.timeDTO = timeDTO;
+    }
+
+    public CustomerDTO getCustomerDTO() {
+        return customerDTO;
+    }
+
+    public void setCustomerDTO(CustomerDTO customerDTO) {
+        this.customerDTO = customerDTO;
+    }
+
+    public double getWeek_amount() {
+        return week_amount;
+    }
+
+    public void setWeek_amount(double week_amount) {
+        this.week_amount = week_amount;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    @Override
+    public String toString() {
+        return "LogReserveDTO{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", date=" + date +
+                ", priceDTO=" + priceDTO +
+                ", pitchDTO=" + pitchDTO +
+                ", timeDTO=" + timeDTO +
+                ", customerDTO=" + customerDTO +
+                ", week_amount=" + week_amount +
+                ", createdAt=" + createdAt +
+                ", updateAt=" + updateAt +
+                '}';
     }
 }

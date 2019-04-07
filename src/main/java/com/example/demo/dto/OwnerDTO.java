@@ -1,7 +1,5 @@
 package com.example.demo.dto;
 
-import javax.persistence.*;
-
 public class OwnerDTO {
     private Long id;
     private String name;

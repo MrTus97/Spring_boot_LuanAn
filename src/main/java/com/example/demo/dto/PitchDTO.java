@@ -1,10 +1,8 @@
 package com.example.demo.dto;
 
-import javax.persistence.*;
-
 public class PitchDTO {
     private Long id;
-    private Long id_type;
+    private PitchTypeDTO pitchType;
     private String name;
     private String description;
     private String image;
@@ -19,12 +17,12 @@ public class PitchDTO {
         this.id = id;
     }
 
-    public Long getId_type() {
-        return id_type;
+    public PitchTypeDTO getPitchType() {
+        return pitchType;
     }
 
-    public void setId_type(Long id_type) {
-        this.id_type = id_type;
+    public void setPitchType(PitchTypeDTO pitchType) {
+        this.pitchType = pitchType;
     }
 
     public String getName() {
@@ -65,18 +63,5 @@ public class PitchDTO {
 
     public void setIs_use(String is_use) {
         this.is_use = is_use;
-    }
-
-    @Override
-    public String toString() {
-        return "PitchDTO{" +
-                "id=" + id +
-                ", id_type=" + id_type +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                ", count=" + count +
-                ", is_use='" + is_use + '\'' +
-                '}';
     }
 }

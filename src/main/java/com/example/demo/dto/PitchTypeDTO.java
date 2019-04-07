@@ -4,8 +4,17 @@ import javax.persistence.*;
 
 public class PitchTypeDTO {
     private Long id;
-    private Long id_owner;
+    private OwnerDTO owner;
     private String name;
+
+    public PitchTypeDTO() {
+    }
+
+    public PitchTypeDTO(Long id, OwnerDTO owner, String name) {
+        this.id = id;
+        this.owner = owner;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -15,12 +24,12 @@ public class PitchTypeDTO {
         this.id = id;
     }
 
-    public Long getId_owner() {
-        return id_owner;
+    public OwnerDTO getOwner() {
+        return owner;
     }
 
-    public void setId_owner(Long id_owner) {
-        this.id_owner = id_owner;
+    public void setOwner(OwnerDTO owner) {
+        this.owner = owner;
     }
 
     public String getName() {
@@ -35,7 +44,7 @@ public class PitchTypeDTO {
     public String toString() {
         return "PitchTypeDTO{" +
                 "id=" + id +
-                ", id_owner=" + id_owner +
+                ", owner=" + owner +
                 ", name='" + name + '\'' +
                 '}';
     }

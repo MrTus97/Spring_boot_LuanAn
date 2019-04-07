@@ -1,17 +1,13 @@
 package com.example.demo.services;
 
 import com.example.demo.dao.models.LogReserveModel;
-import com.example.demo.dao.models.OwnerModel;
 import com.example.demo.dao.repositories.LogReserveRepository;
-import com.example.demo.dao.repositories.OwnerRepository;
 import com.example.demo.dto.LogReserveDTO;
-import com.example.demo.dto.response.Response;
-import net.minidev.json.JSONObject;
+import com.example.demo.dto.PitchDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,12 +21,44 @@ public class LogReserveService {
     private LogReserveRepository logReserveRepository;
 
     @Autowired
-    private OwnerRepository ownerRepository;
+    private OwnerService ownerService;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<LogReserveDTO> getPitchFreeTime(String district, String date, String time, String type) {
+    @Autowired
+    private PitchTypeService pitchTypeService;
+
+    @Autowired
+    private PitchService pitchService;
+
+
+    public List<PitchDTO> getPitchFreeTime(String district, String date, String time, String type) {
+        List<PitchDTO> pitchDTOS = new ArrayList<>();
+        //Lấy ra danh sách tất cả các loại sân đúng khu vực và loại sân
+        List<PitchDTO> pitchFollowDistrictAndType = pitchService.getPitchByDistrictAndName(district,type);
+
+        //Lấy danh sách những sân có log vào ngày và giờ đó
+        List<LogReserveDTO> logReserveDTOS = getAllLogByDateAndTime(date,time);
+
+        //Lọc ra những thứ có không có trong log thì giữ lại
+        for (PitchDTO pitchDTO: pitchFollowDistrictAndType){
+            boolean isOk = true;
+            for (LogReserveDTO logReserveDTO: logReserveDTOS){
+                if (pitchDTO.getId() == logReserveDTO.getPitchDTO().getId()){
+                    isOk = false;
+                    break;
+                }
+            }
+            if (isOk){
+                pitchDTOS.add(pitchDTO);
+            }
+        }
+        return pitchDTOS;
+
+    }
+
+    public List<LogReserveDTO> getAllLogByDateAndTime(String date, String time){
         try {
             List<LogReserveDTO> logReserveDTOS = new ArrayList<>();
             Calendar c = Calendar.getInstance();
@@ -40,8 +68,8 @@ public class LogReserveService {
             String SDateAfter = String.valueOf(c.get(Calendar.YEAR)) + "-" +
                     String.valueOf(c.get(Calendar.MONTH)+ 1) + "-" +
                     String.valueOf(c.get(Calendar.DATE));
-            List<OwnerModel> owners = ownerRepository.getOwnerModelByDistrict(district);
 
+            //Lấy danh sách đặt sân theo ngày giờ đã chọn (có id sân)
             List<LogReserveModel> logReserveModels =
                     logReserveRepository.getAllByTimeAndDate(date,
                             SDateAfter,
@@ -52,8 +80,8 @@ public class LogReserveService {
                 logReserveDTOS.add(logReserveDTO);
             }
             return logReserveDTOS;
-        } catch (ParseException e) {
-            e.printStackTrace();
+        }catch (Exception ex){
+            ex.printStackTrace();
             return null;
         }
 

@@ -1,11 +1,12 @@
 package com.example.demo.dao.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "district")
-public class DistrictModel {
+public class DistrictModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

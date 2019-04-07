@@ -1,14 +1,14 @@
 package com.example.demo.dao.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.type.TypeModifier;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "pitch")
-public class PitchModel {
+public class PitchModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,7 +16,7 @@ public class PitchModel {
 
     @JsonIgnore
     @Column(name = "id_type")
-    private Long pitchType;
+    private Long id_type;
 
     @ManyToOne
     @JoinColumn(name = "id_type", insertable = false, updatable = false)
@@ -43,13 +43,11 @@ public class PitchModel {
     @Column(name = "updated_at")
     private java.sql.Timestamp updateAt;
 
-    //region constructor
-
     public PitchModel() {
     }
 
-    public PitchModel(Long pitchType, PitchTypeModel pitchTypeModel, String name, String description, String image, Double count, String is_use, Timestamp createdAt, Timestamp updateAt) {
-        this.pitchType = pitchType;
+    public PitchModel(Long id_type, PitchTypeModel pitchTypeModel, String name, String description, String image, Double count, String is_use, Timestamp createdAt, Timestamp updateAt) {
+        this.id_type = id_type;
         this.pitchTypeModel = pitchTypeModel;
         this.name = name;
         this.description = description;
@@ -58,32 +56,6 @@ public class PitchModel {
         this.is_use = is_use;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-    }
-    //endregion
-
-    //region get, set
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Timestamp updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public PitchTypeModel getPitchTypeModel() {
-        return pitchTypeModel;
-    }
-
-    public void setPitchTypeModel(PitchTypeModel pitchTypeModel) {
-        this.pitchTypeModel = pitchTypeModel;
     }
 
     public Long getId() {
@@ -94,12 +66,20 @@ public class PitchModel {
         this.id = id;
     }
 
-    public Long getPitchType() {
-        return pitchType;
+    public Long getId_type() {
+        return id_type;
     }
 
-    public void setPitchType(Long pitchType) {
-        this.pitchType = pitchType;
+    public void setId_type(Long id_type) {
+        this.id_type = id_type;
+    }
+
+    public PitchTypeModel getPitchTypeModel() {
+        return pitchTypeModel;
+    }
+
+    public void setPitchTypeModel(PitchTypeModel pitchTypeModel) {
+        this.pitchTypeModel = pitchTypeModel;
     }
 
     public String getName() {
@@ -142,5 +122,19 @@ public class PitchModel {
         this.is_use = is_use;
     }
 
-    //endregion
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
 }

@@ -3,11 +3,12 @@ package com.example.demo.dao.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "pitch_type")
-public class PitchTypeModel {
+public class PitchTypeModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,7 +20,7 @@ public class PitchTypeModel {
 
     @ManyToOne
     @JoinColumn(name = "id_owner", insertable = false, updatable = false)
-    private OwnerModel ownerModel;
+    private OwnerModel owner;
 
     @Column(name = "name")
     private String name;
@@ -30,44 +31,15 @@ public class PitchTypeModel {
     @Column(name = "updated_at")
     private java.sql.Timestamp updateAt;
 
-    //region constructor
-
     public PitchTypeModel() {
     }
 
     public PitchTypeModel(Long id_owner, OwnerModel ownerModel, String name, Timestamp createdAt, Timestamp updateAt) {
         this.id_owner = id_owner;
-        this.ownerModel = ownerModel;
+        this.owner = ownerModel;
         this.name = name;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-    }
-
-    //endregion
-
-    //region get, set
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Timestamp updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public OwnerModel getOwnerModel() {
-        return ownerModel;
-    }
-
-    public void setOwnerModel(OwnerModel ownerModel) {
-        this.ownerModel = ownerModel;
     }
 
     public Long getId() {
@@ -86,6 +58,14 @@ public class PitchTypeModel {
         this.id_owner = id_owner;
     }
 
+    public OwnerModel getOwnerModel() {
+        return owner;
+    }
+
+    public void setOwnerModel(OwnerModel ownerModel) {
+        this.owner = ownerModel;
+    }
+
     public String getName() {
         return name;
     }
@@ -93,5 +73,20 @@ public class PitchTypeModel {
     public void setName(String name) {
         this.name = name;
     }
-    //endregion
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
 }

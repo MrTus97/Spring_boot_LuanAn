@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.dao.models.PitchModel;
 import com.example.demo.dao.repositories.PitchRepository;
 import com.example.demo.dto.PitchDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +16,21 @@ public class PitchService{
     @Autowired
     private PitchRepository pitchRepository;
 
-    public List<PitchDTO> getPitch() {
-        List<PitchModel> pitchModels = pitchRepository.getAll();
-        List<PitchDTO> pitchDTOS = new ArrayList<>();
-        for (PitchModel pitchModel: pitchModels){
-            PitchDTO pitchDTO = new PitchDTO();
-            pitchDTO.setId(pitchModel.getId());
-            pitchDTO.setCount(pitchModel.getCount());
-            pitchDTO.setId_type(pitchModel.getPitchType());
-            pitchDTO.setDescription(pitchModel.getDescription());
-            pitchDTO.setIs_use(pitchModel.getIs_use());
-            pitchDTO.setName(pitchModel.getName());
+    @Autowired
+    private ModelMapper modelMapper;
 
+    /**
+     * Lấy danh sách các sân ở khu vực district(Cẩm Lệ) và là type_name (sân 5)
+     * @param district
+     * @param type_name
+     * @return
+     */
+    public List<PitchDTO> getPitchByDistrictAndName(String district,String type_name){
+        List<PitchDTO> pitchDTOS = new ArrayList<>();
+        List<PitchModel> pitchModels = pitchRepository.getAllByDistrictAndName(district,type_name);
+        for (PitchModel pitchModel:pitchModels){
+            PitchDTO pitchDTO = new PitchDTO();
+            pitchDTO = modelMapper.map(pitchModel,pitchDTO.getClass());
             pitchDTOS.add(pitchDTO);
         }
         return pitchDTOS;

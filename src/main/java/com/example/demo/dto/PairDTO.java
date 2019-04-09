@@ -17,13 +17,14 @@ public class PairDTO {
     private String pair;
     private Date date;
     private String is_verify;
+    private String has_pitch;
     private java.sql.Timestamp createdAt;
     private java.sql.Timestamp updateAt;
 
     public PairDTO() {
     }
 
-    public PairDTO(Long id, CustomerModel customerModel, TimeModel timeModel, String description, String status, Date date, String is_verify, Timestamp createdAt, Timestamp updateAt, String pair) {
+    public PairDTO(Long id, CustomerModel customerModel, TimeModel timeModel, String description, String status, Date date, String is_verify,String has_pitch, Timestamp createdAt, Timestamp updateAt, String pair) {
         this.id = id;
         this.customerModel = customerModel;
         this.timeModel = timeModel;
@@ -31,6 +32,7 @@ public class PairDTO {
         this.status = status;
         this.date = date;
         this.is_verify = is_verify;
+        this.has_pitch = has_pitch;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
         this.pair = pair;
@@ -62,6 +64,14 @@ public class PairDTO {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getHas_pitch() {
+        return has_pitch;
+    }
+
+    public void setHas_pitch(String has_pitch) {
+        this.has_pitch = has_pitch;
     }
 
     public void setDescription(String description) {

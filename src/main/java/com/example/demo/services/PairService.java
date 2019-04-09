@@ -25,10 +25,8 @@ public class PairService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<PairDTO> getAllPair(Optional<Integer> page, Optional<Integer> pageSize) {
-        int evalPageSize = pageSize.orElse(Define.initialPageSize);
-        int evalPage = (page.orElse(0) < 1) ? Define.initialPage : page.get() - 1;
-        List<PairModel> pairModels = pairRepository.getAllByStatusOrderByCreatedAt("YES", PageRequest.of(evalPage,evalPageSize));
+    public List<PairDTO> getAllPair(int page, int pageSize) {
+        List<PairModel> pairModels = pairRepository.getAllByStatusOrderByCreatedAt("YES", PageRequest.of(page,pageSize));
         return convertModelToDTO(pairModels);
     }
 

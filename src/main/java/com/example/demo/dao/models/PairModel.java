@@ -44,6 +44,9 @@ public class PairModel implements Serializable {
     @Column(name = "is_verify")
     private String is_verify;
 
+    @Column(name = "has_pitch")
+    private String has_pitch;
+
     @Column(name = "created_at")
     private java.sql.Timestamp createdAt;
 
@@ -53,18 +56,27 @@ public class PairModel implements Serializable {
     public PairModel() {
     }
 
-    public PairModel(Long id_customer, CustomerModel customerModel, Long id_time, TimeModel timeModel, String description, String status, Date date, String is_verify, Timestamp createdAt, Timestamp updateAt, String pair) {
+    public String getHas_pitch() {
+        return has_pitch;
+    }
+
+    public void setHas_pitch(String has_pitch) {
+        this.has_pitch = has_pitch;
+    }
+
+    public PairModel(Long id_customer, CustomerModel customerModel, Long id_time, TimeModel timeModel, String description, String status, String pair, Date date, String is_verify, String has_pitch, Timestamp createdAt, Timestamp updateAt) {
         this.id_customer = id_customer;
         this.customerModel = customerModel;
         this.id_time = id_time;
         this.timeModel = timeModel;
         this.description = description;
         this.status = status;
+        this.pair = pair;
         this.date = date;
         this.is_verify = is_verify;
+        this.has_pitch = has_pitch;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.pair = pair;
     }
 
     public Long getId() {

@@ -14,13 +14,22 @@ public class LogReserveDTO {
     private TimeDTO timeDTO;
     private CustomerDTO customerDTO;
     private double week_amount;
+    private Date date_end;
     private java.sql.Timestamp createdAt;
     private java.sql.Timestamp updateAt;
 
     public LogReserveDTO() {
     }
 
-    public LogReserveDTO(Long id, String type, String status, Date date, PriceDTO priceDTO, PitchDTO pitchDTO, TimeDTO timeDTO, CustomerDTO customerDTO, double week_amount, Timestamp createdAt, Timestamp updateAt) {
+    public Date getDate_end() {
+        return date_end;
+    }
+
+    public void setDate_end(Date date_end) {
+        this.date_end = date_end;
+    }
+
+    public LogReserveDTO(Long id, String type, String status, Date date, PriceDTO priceDTO, PitchDTO pitchDTO, TimeDTO timeDTO, CustomerDTO customerDTO, double week_amount, Date date_end, Timestamp createdAt, Timestamp updateAt) {
         this.id = id;
         this.type = type;
         this.status = status;
@@ -30,6 +39,7 @@ public class LogReserveDTO {
         this.timeDTO = timeDTO;
         this.customerDTO = customerDTO;
         this.week_amount = week_amount;
+        this.date_end = date_end;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
     }

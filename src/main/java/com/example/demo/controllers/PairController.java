@@ -16,9 +16,9 @@ public class PairController {
     @Autowired
     private PairService pairService;
 
-    @GetMapping(value = "/common/get-all-pair", params = {"page", "pageSize"})
-    public Response getAllPair(@RequestParam Optional<Integer> page,
-                               @RequestParam Optional<Integer> pageSize){
+    @GetMapping(value = "/common/get-all-pair")
+    public Response getAllPair(@RequestParam int page,
+                               @RequestParam int pageSize){
         return new Response(ResultCode.success,pairService.getAllPair(page,pageSize),"OK");
     }
 

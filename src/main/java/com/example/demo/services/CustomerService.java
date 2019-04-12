@@ -29,15 +29,18 @@ public class CustomerService {
     }
 
     public JSONObject checkLogin(String phone, String password){
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO = modelMapper.map(customerRepository.getByPhoneAndPassword(phone, password),customerDTO.getClass());
-        if (customerDTO != null){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("token",jwtService.generateTokenLogin(phone));
-            jsonObject.put("customer",customerDTO);
-            return jsonObject;
-        }
-        else{
+        try {
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO = modelMapper.map(customerRepository.getByPhoneAndPassword(phone, password),customerDTO.getClass());
+            if (customerDTO != null){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("token",jwtService.generateTokenLogin(phone));
+                jsonObject.put("customer",customerDTO);
+                return jsonObject;
+            }
+            return null;
+        }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }

@@ -18,7 +18,7 @@ public class TimeController {
      */
     @GetMapping(value = "/common/get-all-time")
     public Response getAllTime(){
-        return new Response(ResultCode.success,timeService.getAllTime(),"OK");
+        return new Response(ResultCode.SUCCESS,timeService.getAllTime(),"OK");
     }
 
 

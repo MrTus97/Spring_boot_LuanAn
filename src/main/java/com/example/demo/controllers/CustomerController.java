@@ -25,6 +25,11 @@ public class CustomerController {
      */
     @PostMapping(value = "/common/login")
     public Response login(@ApiParam("phone") @RequestParam String phone, @ApiParam("password") @RequestParam String password){
-        return new Response(ResultCode.success,customerService.checkLogin(phone,password),"OK");
+        if (customerService.checkLogin(phone,password) != null){
+            return new Response(ResultCode.SUCCESS,customerService.checkLogin(phone,password),"OK");
+        }else{
+            return new Response(ResultCode.BAD_REQUEST,null,"Sai tên đăng nhập hoặc mật khẩu");
+        }
+
     }
 }

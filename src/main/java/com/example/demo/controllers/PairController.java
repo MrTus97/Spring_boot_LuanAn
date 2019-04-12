@@ -2,7 +2,6 @@ package com.example.demo.controllers;
 
 import com.example.demo.dao.models.PairModel;
 import com.example.demo.define.ResultCode;
-import com.example.demo.dto.PairDTO;
 import com.example.demo.dto.response.Response;
 import com.example.demo.services.PairService;
 import io.swagger.annotations.ApiParam;
@@ -19,7 +18,7 @@ public class PairController {
     @GetMapping(value = "/common/get-all-pair")
     public Response getAllPair(@RequestParam int page,
                                @RequestParam int pageSize){
-        return new Response(ResultCode.success,pairService.getAllPair(page,pageSize),"OK");
+        return new Response(ResultCode.SUCCESS,pairService.getAllPair(page,pageSize),"OK");
     }
 
     @GetMapping(value = "/personal/get-pair-by-id")
@@ -27,7 +26,7 @@ public class PairController {
                                 @RequestParam Optional<Integer> page,
                                 @RequestParam Optional<Integer> pageSize
     ){
-        return new Response(ResultCode.success, pairService.getPairById(idCustomer,page,pageSize),"OK");
+        return new Response(ResultCode.SUCCESS, pairService.getPairById(idCustomer,page,pageSize),"OK");
     }
 
     /**
@@ -37,13 +36,13 @@ public class PairController {
      */
     @PostMapping(value = "/personal/post-pair")
     public Response postPair(@ApiParam @RequestBody PairModel pairModel){
-        return new Response(ResultCode.success,pairService.postPair(pairModel),"OK");
+        return new Response(ResultCode.SUCCESS,pairService.postPair(pairModel),"OK");
     }
 
     @PutMapping(value = "/personal/update-pair")
     public Response updateStatus(@ApiParam("status") @RequestParam String status,
                                  @ApiParam("idPair") @RequestParam Long idPair){
-        return new Response(ResultCode.success,pairService.updateStatus(status, idPair),"OK");
+        return new Response(ResultCode.SUCCESS,pairService.updateStatus(status, idPair),"OK");
     }
 
 }

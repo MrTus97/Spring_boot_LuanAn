@@ -33,14 +33,14 @@ public class FavoriteAddressController {
     public Response favoriteOwner(
             @ApiParam("idUser") @RequestParam Long idCustomer,
             @ApiParam("idOwner")@RequestParam Long idOwner){
-        return new Response(ResultCode.success, favoriteAddressService.favoriteOwner(idCustomer, idOwner),"OK");
+        return new Response(ResultCode.SUCCESS, favoriteAddressService.favoriteOwner(idCustomer, idOwner),"OK");
     }
 
     @DeleteMapping(value = "/personal/un-favorite-owner")
     public Response unFavoriteOwner(
         @ApiParam("idFavorite") @RequestParam Long idFavorite
     ){
-        return new Response(ResultCode.success,favoriteAddressService.unFavoriteOwner(idFavorite),"OK");
+        return new Response(ResultCode.SUCCESS,favoriteAddressService.unFavoriteOwner(idFavorite),"OK");
     }
 
 }

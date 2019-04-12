@@ -3,6 +3,8 @@ package com.example.demo.services;
 import com.example.demo.dao.models.DistrictModel;
 import com.example.demo.dao.repositories.DistrictRepository;
 import com.example.demo.dto.DistrictDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import net.minidev.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,14 @@ public class DistrictService{
 
 
     public List<DistrictDTO> getAllDistrict() {
-        List<DistrictModel> districtModels = districtRepository.getAllBy();
-        return convertModelToDTO(districtModels);
+        try {
+            List<DistrictModel> districtModels = districtRepository.getAllBy();
+            return convertModelToDTO(districtModels);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<DistrictDTO> convertModelToDTO(List<DistrictModel> districtModels) {

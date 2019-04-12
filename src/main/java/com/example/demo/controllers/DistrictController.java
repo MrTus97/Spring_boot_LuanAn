@@ -1,10 +1,13 @@
 package com.example.demo.controllers;
 import com.example.demo.define.ResultCode;
+import com.example.demo.dto.DistrictDTO;
 import com.example.demo.dto.response.Response;
 import com.example.demo.services.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class DistrictController {
@@ -18,6 +21,12 @@ public class DistrictController {
      */
     @GetMapping(value = "/common/get-all-district")
     public Response getAllDistrict(){
-        return new Response(ResultCode.success, districtService.getAllDistrict(),"OK");
+        List<DistrictDTO> districtDTOList = districtService.getAllDistrict();
+        if (districtDTOList != null){
+            return new Response(ResultCode.SUCCESS, districtService.getAllDistrict(),"OK");
+        }else{
+            return new Response(ResultCode.BAD_REQUEST,null,"Bad request");
+        }
+
     }
 }

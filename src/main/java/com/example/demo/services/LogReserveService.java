@@ -34,27 +34,33 @@ public class LogReserveService {
 
 
     public List<PitchDTO> getPitchFreeTime(String district, String date, String time, String type) {
-        List<PitchDTO> pitchDTOS = new ArrayList<>();
-        //Lấy ra danh sách tất cả các loại sân đúng khu vực và loại sân
-        List<PitchDTO> pitchFollowDistrictAndType = pitchService.getPitchByDistrictAndName(district,type);
+        try {
+            List<PitchDTO> pitchDTOS = new ArrayList<>();
+            //Lấy ra danh sách tất cả các loại sân đúng khu vực và loại sân
+            List<PitchDTO> pitchFollowDistrictAndType = pitchService.getPitchByDistrictAndName(district,type);
 
-        //Lấy danh sách những sân có log vào ngày và giờ đó
-        List<LogReserveDTO> logReserveDTOS = getAllLogByDateAndTime(date,time);
+            //Lấy danh sách những sân có log vào ngày và giờ đó
+            List<LogReserveDTO> logReserveDTOS = getAllLogByDateAndTime(date,time);
 
-        //Lọc ra những thứ có không có trong log thì giữ lại
-        for (PitchDTO pitchDTO: pitchFollowDistrictAndType){
-            boolean isOk = true;
-            for (LogReserveDTO logReserveDTO: logReserveDTOS){
-                if (pitchDTO.getId() == logReserveDTO.getPitchDTO().getId()){
-                    isOk = false;
-                    break;
+            //Lọc ra những thứ có không có trong log thì giữ lại
+            for (PitchDTO pitchDTO: pitchFollowDistrictAndType){
+                boolean isOk = true;
+                for (LogReserveDTO logReserveDTO: logReserveDTOS){
+                    if (pitchDTO.getId() == logReserveDTO.getPitchDTO().getId()){
+                        isOk = false;
+                        break;
+                    }
+                }
+                if (isOk){
+                    pitchDTOS.add(pitchDTO);
                 }
             }
-            if (isOk){
-                pitchDTOS.add(pitchDTO);
-            }
+            return pitchDTOS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return pitchDTOS;
+
 
     }
 

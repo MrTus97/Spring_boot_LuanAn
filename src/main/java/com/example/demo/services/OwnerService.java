@@ -21,8 +21,14 @@ public class OwnerService{
 
 
     public List<OwnerDTO> getAllOwner() {
-        List<OwnerModel> list = ownerRepository.getAllOwner();
-        return convertModelToDTO(list);
+        try {
+            List<OwnerModel> list = ownerRepository.getAllOwner();
+            return convertModelToDTO(list);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public List<OwnerDTO> convertModelToDTO(List<OwnerModel> ownerModels) {

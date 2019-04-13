@@ -2,8 +2,11 @@ package com.example.demo.services;
 
 import com.example.demo.dao.models.LogReserveModel;
 import com.example.demo.dao.repositories.LogReserveRepository;
+import com.example.demo.define.Define;
 import com.example.demo.dto.LogReserveDTO;
 import com.example.demo.dto.PitchDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import net.minidev.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,27 +23,26 @@ public class LogReserveService {
     @Autowired
     private LogReserveRepository logReserveRepository;
 
-    @Autowired
-    private OwnerService ownerService;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private PitchTypeService pitchTypeService;
 
     @Autowired
     private PitchService pitchService;
 
+    @Autowired
+    private PriceService priceService;
 
-    public List<PitchDTO> getPitchFreeTime(String district, String date, String time, String type) {
+
+    public List<JSONObject> getPitchFreeTime(String district, String date, Long idTime, String type) {
         try {
-            List<PitchDTO> pitchDTOS = new ArrayList<>();
+            List<JSONObject> pitchDTOS = new ArrayList<>();
             //Lấy ra danh sách tất cả các loại sân đúng khu vực và loại sân
             List<PitchDTO> pitchFollowDistrictAndType = pitchService.getPitchByDistrictAndName(district,type);
 
             //Lấy danh sách những sân có log vào ngày và giờ đó
-            List<LogReserveDTO> logReserveDTOS = getAllLogByDateAndTime(date,time);
+            List<LogReserveDTO> logReserveDTOS = getAllLogByDateAndTime(date,idTime);
 
             //Lọc ra những thứ có không có trong log thì giữ lại
             for (PitchDTO pitchDTO: pitchFollowDistrictAndType){
@@ -52,7 +54,10 @@ public class LogReserveService {
                     }
                 }
                 if (isOk){
-                    pitchDTOS.add(pitchDTO);
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("pitch",pitchDTO);
+                    jsonObject.put("price",priceService.getPriceOfPitchType(idTime,pitchDTO.getPitchType().getId(),date));
+                    pitchDTOS.add(jsonObject);
                 }
             }
             return pitchDTOS;
@@ -64,22 +69,16 @@ public class LogReserveService {
 
     }
 
-    public List<LogReserveDTO> getAllLogByDateAndTime(String date, String time){
+    public List<LogReserveDTO> getAllLogByDateAndTime(String date, Long idTime){
         try {
             List<LogReserveDTO> logReserveDTOS = new ArrayList<>();
-            Calendar c = Calendar.getInstance();
-            Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-            c.setTime(dDate);
-            c.add(Calendar.DATE,1);
-            String SDateAfter = String.valueOf(c.get(Calendar.YEAR)) + "-" +
-                    String.valueOf(c.get(Calendar.MONTH)+ 1) + "-" +
-                    String.valueOf(c.get(Calendar.DATE));
+            String SDateAfter = Define.dateAfter(date);
 
             //Lấy danh sách đặt sân theo ngày giờ đã chọn (có id sân)
             List<LogReserveModel> logReserveModels =
                     logReserveRepository.getAllByTimeAndDate(date,
                             SDateAfter,
-                            time);
+                            idTime);
             for (LogReserveModel logReserveModel: logReserveModels){
                 LogReserveDTO logReserveDTO = new LogReserveDTO();
                 logReserveDTO = modelMapper.map(logReserveModel,logReserveDTO.getClass());
@@ -91,5 +90,34 @@ public class LogReserveService {
             return null;
         }
 
+    }
+
+    public JSONObject reservePitch(Long idCustomer, Long idPitch, Long idPrice, Long idTime, String date) {
+        try {
+            String SDateAfter = Define.dateAfter(date);
+            List<LogReserveModel> logReserveModels =
+                    logReserveRepository.getAllByTimeAndDateAndPitch(date,
+                            SDateAfter,
+                            idTime,
+                            idPitch);
+            JSONObject jsonObject = new JSONObject();
+            if (logReserveModels.isEmpty()){
+                LogReserveModel logReserveModel = new LogReserveModel();
+                Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                logReserveModel.setDate(dDate);
+                logReserveModel.setId_customer(idCustomer);
+                logReserveModel.setId_pitch(idPitch);
+                logReserveModel.setId_price(idPrice);
+                logReserveModel.setId_time(idTime);
+                logReserveRepository.save(logReserveModel);
+                jsonObject.put("status","OK");
+            }else{
+                jsonObject.put("status","Lịch đã được đặt");
+            }
+            return jsonObject;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

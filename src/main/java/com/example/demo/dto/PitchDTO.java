@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import net.minidev.json.JSONObject;
+
 public class PitchDTO {
     private Long id;
     private PitchTypeDTO pitchType;

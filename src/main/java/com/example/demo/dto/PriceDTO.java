@@ -1,6 +1,8 @@
 package com.example.demo.dto;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class PriceDTO {
@@ -9,6 +11,10 @@ public class PriceDTO {
     private Long id_time;
     private Double price;
     private Date date;
+
+    private java.sql.Timestamp createdAt;
+    private java.sql.Timestamp updateAt;
+    private Double rate_of_change;
 
     public Long getId() {
         return id;
@@ -50,14 +56,41 @@ public class PriceDTO {
         this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "PriceDTO{" +
-                "id=" + id +
-                ", id_type=" + id_type +
-                ", id_time=" + id_time +
-                ", price=" + price +
-                ", date=" + date +
-                '}';
+    public PriceDTO(Long id, Long id_type, Long id_time, Double price, Date date, Timestamp createdAt, Timestamp updateAt, Double rate_of_change) {
+        this.id = id;
+        this.id_type = id_type;
+        this.id_time = id_time;
+        this.price = price;
+        this.date = date;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.rate_of_change = rate_of_change;
+    }
+
+    public Double getRate_of_change() {
+        return rate_of_change;
+    }
+
+    public void setRate_of_change(Double rate_of_change) {
+        this.rate_of_change = rate_of_change;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public PriceDTO() {
     }
 }

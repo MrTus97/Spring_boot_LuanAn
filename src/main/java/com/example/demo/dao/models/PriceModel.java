@@ -43,12 +43,15 @@ public class PriceModel implements Serializable {
     @Column(name = "updated_at")
     private java.sql.Timestamp updateAt;
 
+    @Column(name = "rate_of_change")
+    private Double rate_of_change;
+
     //region constructor
 
     public PriceModel() {
     }
 
-    public PriceModel(Long id_type, PitchTypeModel pitchTypeModel, Long id_time, TimeModel timeModel, Double price, Date date, Timestamp createdAt, Timestamp updateAt) {
+    public PriceModel(Long id_type, PitchTypeModel pitchTypeModel, Long id_time, TimeModel timeModel, Double price, Date date, Timestamp createdAt, Timestamp updateAt,Double rate_of_change) {
         this.id_type = id_type;
         this.pitchTypeModel = pitchTypeModel;
         this.id_time = id_time;
@@ -57,6 +60,7 @@ public class PriceModel implements Serializable {
         this.date = date;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+        this.rate_of_change = rate_of_change;
     }
     //endregion
 
@@ -131,6 +135,14 @@ public class PriceModel implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Double getRate_of_change() {
+        return rate_of_change;
+    }
+
+    public void setRate_of_change(Double rate_of_change) {
+        this.rate_of_change = rate_of_change;
     }
 
     //endregion

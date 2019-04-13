@@ -1,5 +1,9 @@
 package com.example.demo.define;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Define {
   public static final long tokenExpireLength = 864000000;
 
@@ -18,5 +22,21 @@ public class Define {
 
   public static final String emailDefault = "nals_pmo@nal.com";
 
+  public static String dateAfter(String date){
+    try {
+      Calendar c = Calendar.getInstance();
+      Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+      c.setTime(dDate);
+      c.add(Calendar.DATE,1);
+      String SDateAfter = String.valueOf(c.get(Calendar.YEAR)) + "-" +
+              String.valueOf(c.get(Calendar.MONTH)+ 1) + "-" +
+              String.valueOf(c.get(Calendar.DATE));
+      return SDateAfter;
+    }catch (Exception e){
+      e.printStackTrace();
+      return null;
+    }
+
+  }
 
 }

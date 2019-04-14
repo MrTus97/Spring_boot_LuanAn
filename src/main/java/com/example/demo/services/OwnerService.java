@@ -2,7 +2,9 @@ package com.example.demo.services;
 
 import com.example.demo.dao.models.OwnerModel;
 import com.example.demo.dao.repositories.OwnerRepository;
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.OwnerDTO;
+import com.example.demo.dto.response.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,13 @@ public class OwnerService{
     private ModelMapper modelMapper;
 
 
-    public List<OwnerDTO> getAllOwner() {
+    public Response getAllOwner() {
         try {
             List<OwnerModel> list = ownerRepository.getAllOwner();
-            return convertModelToDTO(list);
+            return new Response(ResultCode.BAD_REQUEST,convertModelToDTO(list),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }
@@ -47,24 +49,27 @@ public class OwnerService{
 
     }
 
-    public List<OwnerDTO> getOwnerById(Long id) {
+    public Response getOwnerById(Long id) {
         try {
             List<OwnerModel> ownerModels = ownerRepository.getOwnerModelById(id);
-            return convertModelToDTO(ownerModels);
+            return new Response(ResultCode.SUCCESS,convertModelToDTO(ownerModels),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }
 
-    public List<OwnerDTO> getOwnerByDistrict(String district) {
+    public Response getOwnerByDistrict(String district) {
         try {
             List<OwnerModel> ownerModels = ownerRepository.getOwnerModelByDistrict(district);
-            return convertModelToDTO(ownerModels);
+            if (ownerModels.isEmpty()){
+                return new Response(ResultCode.SUCCESS,null,"Không tìm thấy kết quả");
+            }
+            return new Response(ResultCode.SUCCESS, convertModelToDTO(ownerModels),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }

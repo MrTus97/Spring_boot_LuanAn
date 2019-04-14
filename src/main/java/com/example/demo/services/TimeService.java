@@ -2,7 +2,9 @@ package com.example.demo.services;
 
 import com.example.demo.dao.models.TimeModel;
 import com.example.demo.dao.repositories.TimeRepository;
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.TimeDTO;
+import com.example.demo.dto.response.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +20,14 @@ public class TimeService{
     @Autowired
     private ModelMapper modelMapper;
 
-
-
-    public List<TimeDTO> getAllTime() {
+    public Response getAllTime() {
         try {
             List<TimeModel> timeModels = timeRepository.getAllTime();
-            return convertModelToDTO(timeModels);
+            return new Response(ResultCode.SUCCESS,convertModelToDTO(timeModels),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
-
     }
 
     public List<TimeDTO> convertModelToDTO(List<TimeModel> list) {

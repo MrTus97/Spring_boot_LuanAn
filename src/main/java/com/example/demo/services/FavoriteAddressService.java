@@ -3,7 +3,9 @@ package com.example.demo.services;
 import com.example.demo.dao.models.FavoriteAddressModel;
 import com.example.demo.dao.repositories.FavoriteAddressRepository;
 import com.example.demo.define.Define;
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.FavoriteAddressDTO;
+import com.example.demo.dto.response.Response;
 import com.example.demo.rest.CustomAccessDeniedHandler;
 import net.minidev.json.JSONObject;
 import org.modelmapper.ModelMapper;
@@ -26,8 +28,11 @@ public class FavoriteAddressService {
 
 
 
-    public JSONObject favoriteOwner(Long idCustomer, Long idOwner) {
+    public Response favoriteOwner(Long idCustomer, Long idOwner) {
         try{
+            if (idCustomer != Define.idCustomer){
+                return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            }
             JSONObject jsonObject = new JSONObject();
             FavoriteAddressModel favoriteAddressModel1 = favoriteAddressRepository.getByIdCustomerAndOwner(idCustomer,idOwner);
             if (favoriteAddressModel1==null){
@@ -36,13 +41,15 @@ public class FavoriteAddressService {
                 favoriteAddressModel.setId_customer(idCustomer);
                 favoriteAddressRepository.save(favoriteAddressModel);
                 jsonObject.put("status","OK");
+                return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);
             }else {
                 jsonObject.put("status", "Sân này đã được yêu thích");
+                return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_BAD_REQUEST);
             }
-            return jsonObject;
+
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
 
@@ -53,7 +60,7 @@ public class FavoriteAddressService {
      * @param idCustomer
      * @return
      */
-    public List<FavoriteAddressDTO> getFavoriteByIdCustomer(Long idCustomer) {
+    public Response getFavoriteByIdCustomer(Long idCustomer) {
         try {
             if (idCustomer == Define.idCustomer){
                 List<FavoriteAddressDTO> favoriteAddressDTOS = new ArrayList<>();
@@ -63,14 +70,14 @@ public class FavoriteAddressService {
                     favoriteAddressDTO = modelMapper.map(favoriteAddressModel,favoriteAddressDTO.getClass());
                     favoriteAddressDTOS.add(favoriteAddressDTO);
                 }
-                return favoriteAddressDTOS;
+                return new Response(ResultCode.SUCCESS,favoriteAddressDTOS,ResultCode.STR_SUCCESS);
             }else{
-                return null;
+                return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_ACCESS_DENIED);
             }
 
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }
@@ -81,20 +88,24 @@ public class FavoriteAddressService {
      * @param idFavorite
      * @return
      */
-    public JSONObject unFavoriteOwner(Long idFavorite) {
+    public Response unFavoriteOwner(Long idFavorite,Long idCustomer) {
         try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            }
             Long status = favoriteAddressRepository.deleteFavoriteAddressModelById(idFavorite);
             JSONObject jsonObject = new JSONObject();
             if (status > 0) {
-                jsonObject.put("status", status);
+                jsonObject.put("status", "OK");
+                return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);
             } else {
-                jsonObject.put("status", "-1");
+                jsonObject.put("status", "BAD REQUEST");
+                return new Response(ResultCode.BAD_REQUEST,jsonObject,ResultCode.STR_BAD_REQUEST);
             }
 
-            return jsonObject;
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }

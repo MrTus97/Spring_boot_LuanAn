@@ -3,7 +3,9 @@ package com.example.demo.services;
 import com.example.demo.dao.models.PairModel;
 import com.example.demo.dao.repositories.PairRepository;
 import com.example.demo.define.Define;
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.PairDTO;
+import com.example.demo.dto.response.Response;
 import net.minidev.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,14 @@ public class PairService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<PairDTO> getAllPair(int page, int pageSize) {
+    public Response getAllPair(int page, int pageSize) {
         try {
+
             List<PairModel> pairModels = pairRepository.getAllByStatusOrderByCreatedAt("YES", PageRequest.of(page,pageSize));
-            return convertModelToDTO(pairModels);
+            return new Response(ResultCode.SUCCESS,convertModelToDTO(pairModels),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }
@@ -53,21 +56,25 @@ public class PairService {
     }
 
 
-    public List<PairDTO> getPairById(Long idCustomer, Optional<Integer> page, Optional<Integer> pageSize) {
+    public Response getPairById(Long idCustomer, Optional<Integer> page, Optional<Integer> pageSize) {
         try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            }
             int evalPageSize = pageSize.orElse(Define.initialPageSize);
             int evalPage = (page.orElse(0) < 1) ? Define.initialPage : page.get() - 1;
             List<PairModel> pairModels = pairRepository.getAllByIdCustomer(idCustomer, PageRequest.of(evalPage,evalPageSize));
-            return convertModelToDTO(pairModels);
+            return new Response(ResultCode.SUCCESS, convertModelToDTO(pairModels),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }
 
     public JSONObject postPair(PairModel pairModel) {
         try {
+
             JSONObject jsonObject = new JSONObject();
             pairRepository.save(pairModel);
             jsonObject.put("status","OK");
@@ -78,19 +85,22 @@ public class PairService {
         }
     }
 
-    public JSONObject updateStatus(String status, Long idPair) {
+    public Response updateStatus(String status, Long idPair,Long idCustomer) {
 
         try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            }
             JSONObject jsonObject = new JSONObject();
             PairModel pairModel = pairRepository.getById(idPair);
             pairModel.setStatus(status);
             pairRepository.save(pairModel);
             jsonObject.put("status","OK");
-            return jsonObject;
+            return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);
 
-        }catch (Exception ex){
-            ex.printStackTrace();
-            return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response(ResultCode.BAD_REQUEST,null,e.getMessage());
         }
 
     }

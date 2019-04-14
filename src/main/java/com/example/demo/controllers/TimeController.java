@@ -21,13 +21,7 @@ public class TimeController {
      */
     @GetMapping(value = "/common/get-all-time")
     public Response getAllTime(){
-        List<TimeDTO> list = timeService.getAllTime();
-        if (list != null){
-            return new Response(ResultCode.SUCCESS,list,"OK");
-        }else{
-            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
-        }
-
+        return timeService.getAllTime();
     }
 
 

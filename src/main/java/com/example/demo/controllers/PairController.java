@@ -22,12 +22,8 @@ public class PairController {
     @GetMapping(value = "/common/get-all-pair")
     public Response getAllPair(@RequestParam int page,
                                @RequestParam int pageSize){
-        List<PairDTO> list = pairService.getAllPair(page,pageSize);
-        if (list != null){
-            return new Response(ResultCode.SUCCESS,list,ResultCode.STR_SUCCESS);
-        }else{
-            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
-        }
+        return pairService.getAllPair(page,pageSize);
+
 
     }
 
@@ -36,12 +32,8 @@ public class PairController {
                                 @RequestParam Optional<Integer> page,
                                 @RequestParam Optional<Integer> pageSize
     ){
-        List<PairDTO> list = pairService.getPairById(idCustomer,page,pageSize);
-        if (list != null){
-            return new Response(ResultCode.SUCCESS,list,ResultCode.STR_SUCCESS);
-        }else{
-            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
-        }
+        return pairService.getPairById(idCustomer,page,pageSize);
+
     }
 
     /**
@@ -62,13 +54,10 @@ public class PairController {
 
     @PutMapping(value = "/personal/update-pair")
     public Response updateStatus(@ApiParam("status") @RequestParam String status,
-                                 @ApiParam("idPair") @RequestParam Long idPair){
-        JSONObject jsonObject =pairService.updateStatus(status, idPair);
-        if (jsonObject != null){
-            return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);
-        }else{
-            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
-        }
+                                 @ApiParam("idPair") @RequestParam Long idPair,
+                                 @ApiParam("idCustomer") @RequestParam Long idCustomer){
+        return pairService.updateStatus(status, idPair,idCustomer);
+
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,11 @@ public interface LogReserveRepository extends CrudRepository<LogReserveModel, Lo
     @Query(value = "select * from log_reserve where id_customer=?1",
             countQuery = "SELECT count(*) FROM log_reserve",nativeQuery = true)
     List<LogReserveModel> getAllById_customer(Long idCustomer, Pageable pageable);
+
+    LogReserveModel getById(Long id);
+
+    @Transactional
+    void deleteById(Long id);
 
 
 }

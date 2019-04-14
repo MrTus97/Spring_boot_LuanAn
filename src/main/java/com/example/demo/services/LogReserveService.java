@@ -3,8 +3,10 @@ package com.example.demo.services;
 import com.example.demo.dao.models.LogReserveModel;
 import com.example.demo.dao.repositories.LogReserveRepository;
 import com.example.demo.define.Define;
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.LogReserveDTO;
 import com.example.demo.dto.PitchDTO;
+import com.example.demo.dto.response.Response;
 import net.minidev.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.demo.define.ResultCode.*;
 
 @Service
 public class LogReserveService {
@@ -35,8 +39,9 @@ public class LogReserveService {
     private PriceService priceService;
 
 
-    public List<JSONObject> getPitchFreeTime(String district, String date, Long idTime, String type) {
+    public Response getPitchFreeTime(String district, String date, Long idTime, String type) {
         try {
+
             List<JSONObject> pitchDTOS = new ArrayList<>();
             //Lấy ra danh sách tất cả các loại sân đúng khu vực và loại sân
             List<PitchDTO> pitchFollowDistrictAndType = pitchService.getPitchByDistrictAndName(district,type);
@@ -60,10 +65,10 @@ public class LogReserveService {
                     pitchDTOS.add(jsonObject);
                 }
             }
-            return pitchDTOS;
+            return new Response(ResultCode.SUCCESS, pitchDTOS,ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(BAD_REQUEST,null,e.getMessage());
         }
 
 
@@ -85,8 +90,11 @@ public class LogReserveService {
 
     }
 
-    public JSONObject reservePitch(Long idCustomer, Long idPitch, Long idPrice, Long idTime, String date) {
+    public Response reservePitch(Long idCustomer, Long idPitch, Long idPrice, Long idTime, String date) {
         try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            }
             String SDateAfter = Define.dateAfter(date);
             List<LogReserveModel> logReserveModels =
                     logReserveRepository.getAllByTimeAndDateAndPitch(date + "%",
@@ -106,20 +114,23 @@ public class LogReserveService {
             }else{
                 jsonObject.put("status","Lịch đã được đặt");
             }
-            return jsonObject;
+            return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(BAD_REQUEST,null,e.getMessage());
         }
     }
 
-    public List<LogReserveDTO> getLogByIdCustomer(Long idCustomer,int page,int pageSize){
+    public Response getLogByIdCustomer(Long idCustomer,int page,int pageSize){
         try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            }
             List<LogReserveModel> list = logReserveRepository.getAllById_customer(idCustomer, PageRequest.of(page-1,pageSize));
-            return convertModelToDTO(list);
+            return new Response(ResultCode.SUCCESS, convertModelToDTO(list),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new Response(BAD_REQUEST,null,e.getMessage());
         }
     }
 
@@ -132,5 +143,24 @@ public class LogReserveService {
             logReserveDTOS.add(logReserveDTO);
         }
         return logReserveDTOS;
+    }
+
+    public Response cancelReserve(Long idCustomer, Long idReserve) {
+        try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            }
+            LogReserveModel logReserveModel = logReserveRepository.getById(idReserve);
+            if (logReserveModel != null){
+                //Kiểm tra giờ tại đây
+                logReserveRepository.deleteById(idReserve);
+                return new Response(SUCCESS,"OK",STR_SUCCESS);
+            }else{
+                return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
+        }
     }
 }

@@ -27,6 +27,19 @@ public class CustomerController {
         }else{
             return new Response(ResultCode.BAD_REQUEST,null,"Sai tên đăng nhập hoặc mật khẩu");
         }
-
     }
+
+    @PostMapping(value = "/common/create-account")
+    public Response createAccount(@ApiParam("phone") @RequestParam String phone,
+                                  @ApiParam("name") @RequestParam String name,
+                                  @ApiParam("teamName") @RequestParam String teamName,
+                                  @ApiParam("password") @RequestParam String password){
+        return customerService.createAccount(phone,name,teamName,password);
+    }
+
+    @PutMapping(value = "/personal/verify-account")
+    public Response verifyAccount(@ApiParam("idCustomer") @RequestParam Long idCustomer){
+        return customerService.verifyAccount(idCustomer);
+    }
+
 }

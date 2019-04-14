@@ -21,12 +21,6 @@ public class DistrictController {
      */
     @GetMapping(value = "/common/get-all-district")
     public Response getAllDistrict(){
-        List<DistrictDTO> districtDTOList = districtService.getAllDistrict();
-        if (districtDTOList != null){
-            return new Response(ResultCode.SUCCESS, districtService.getAllDistrict(),"OK");
-        }else{
-            return new Response(ResultCode.BAD_REQUEST,null,"Bad request");
-        }
-
+        return districtService.getAllDistrict();
     }
 }

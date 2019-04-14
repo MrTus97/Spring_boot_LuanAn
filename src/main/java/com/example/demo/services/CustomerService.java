@@ -2,11 +2,17 @@ package com.example.demo.services;
 
 import com.example.demo.dao.models.CustomerModel;
 import com.example.demo.dao.repositories.CustomerRepository;
+import com.example.demo.define.Define;
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.CustomerDTO;
+import com.example.demo.dto.response.Response;
 import net.minidev.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.example.demo.define.ResultCode.*;
+
 @Service
 public class CustomerService {
 
@@ -44,6 +50,41 @@ public class CustomerService {
         }catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public Response createAccount(String phone, String name, String teamName, String password) {
+        try {
+            CustomerModel customerModel = customerRepository.getByPhone(phone);
+            if (customerModel != null){
+                return new Response(BAD_REQUEST,null,"Sđt đăng kí đã tồn tại");
+            }else{
+                CustomerModel customerModel1 = new CustomerModel();
+                customerModel.setPhone(phone);
+                customerModel.setName(name);
+                customerModel.setTeam_name(teamName);
+                customerModel.setPassword(password);
+                customerRepository.save(customerModel);
+                return new Response(ResultCode.SUCCESS,"Đăng kí thành công",ResultCode.STR_SUCCESS);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response(BAD_REQUEST,null,e.getMessage());
+        }
+    }
+
+    public Response verifyAccount(Long idCustomer) {
+        try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ACCESS_DENIED,null,STR_ACCESS_DENIED);
+            }
+            CustomerModel customerModel = customerRepository.getById(idCustomer);
+            customerModel.setVerify("YES");
+            customerRepository.save(customerModel);
+            return new Response(SUCCESS,"OK",STR_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
         }
     }
 }

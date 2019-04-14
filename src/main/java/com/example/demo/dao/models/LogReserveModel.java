@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "log_reserve")
@@ -57,7 +57,7 @@ public class LogReserveModel implements Serializable {
     private CustomerModel customerModel;
 
     @Column(name = "week_amount")
-    private double week_amount;
+    private Double week_amount;
 
     @Column(name = "date_end")
     private java.sql.Date date_end;
@@ -79,7 +79,7 @@ public class LogReserveModel implements Serializable {
         this.date_end = date_end;
     }
 
-    public LogReserveModel(Long id_price, Long id_pitch, Long id_time, Long id_customer, String type, String status, Date date, PriceModel priceModel, PitchModel pitchModel, TimeModel timeModel, CustomerModel customerModel, double week_amount, java.sql.Date date_end, Timestamp createdAt, Timestamp updateAt) {
+    public LogReserveModel(Long id_price, Long id_pitch, Long id_time, Long id_customer, String type, String status, Date date, PriceModel priceModel, PitchModel pitchModel, TimeModel timeModel, CustomerModel customerModel, Double week_amount, java.sql.Date date_end, Timestamp createdAt, Timestamp updateAt) {
         this.id_price = id_price;
         this.id_pitch = id_pitch;
         this.id_time = id_time;
@@ -193,11 +193,11 @@ public class LogReserveModel implements Serializable {
         this.customerModel = customerModel;
     }
 
-    public double getWeek_amount() {
+    public Double getWeek_amount() {
         return week_amount;
     }
 
-    public void setWeek_amount(double week_amount) {
+    public void setWeek_amount(Double week_amount) {
         this.week_amount = week_amount;
     }
 
@@ -217,20 +217,4 @@ public class LogReserveModel implements Serializable {
         this.updateAt = updateAt;
     }
 
-    @Override
-    public String toString() {
-        return "LogReserveModel{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", date=" + date +
-                ", priceModel=" + priceModel +
-                ", pitchModel=" + pitchModel +
-                ", timeModel=" + timeModel +
-                ", customerModel=" + customerModel +
-                ", week_amount=" + week_amount +
-                ", createdAt=" + createdAt +
-                ", updateAt=" + updateAt +
-                '}';
-    }
 }

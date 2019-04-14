@@ -21,17 +21,29 @@ public class TimeService{
 
 
     public List<TimeDTO> getAllTime() {
-        List<TimeModel> timeModels = timeRepository.getAllTime();
-        return convertModelToDTO(timeModels);
+        try {
+            List<TimeModel> timeModels = timeRepository.getAllTime();
+            return convertModelToDTO(timeModels);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public List<TimeDTO> convertModelToDTO(List<TimeModel> list) {
-        List<TimeDTO> timeDTOS = new ArrayList<>();
-        for (TimeModel timeModel:list){
-            TimeDTO timeDTO = new TimeDTO();
-            timeDTO = modelMapper.map(timeModel,timeDTO.getClass());
-            timeDTOS.add(timeDTO);
+        try {
+            List<TimeDTO> timeDTOS = new ArrayList<>();
+            for (TimeModel timeModel:list){
+                TimeDTO timeDTO = new TimeDTO();
+                timeDTO = modelMapper.map(timeModel,timeDTO.getClass());
+                timeDTOS.add(timeDTO);
+            }
+            return timeDTOS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return timeDTOS;
+
     }
 }

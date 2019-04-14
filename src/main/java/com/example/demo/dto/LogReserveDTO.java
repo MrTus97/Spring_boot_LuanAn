@@ -1,19 +1,21 @@
 package com.example.demo.dto;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
+@JsonIgnoreProperties(value = "customer")
 public class LogReserveDTO {
     private Long id;
     private String type;
     private String status;
     private Date date;
-    private PriceDTO priceDTO;
-    private PitchDTO pitchDTO;
-    private TimeDTO timeDTO;
-    private CustomerDTO customerDTO;
-    private double week_amount;
+    private PriceDTO price;
+    private PitchDTO pitch;
+    private TimeDTO time;
+    private CustomerDTO customer;
+    private Double week_amount;
     private Date date_end;
     private java.sql.Timestamp createdAt;
     private java.sql.Timestamp updateAt;
@@ -29,15 +31,15 @@ public class LogReserveDTO {
         this.date_end = date_end;
     }
 
-    public LogReserveDTO(Long id, String type, String status, Date date, PriceDTO priceDTO, PitchDTO pitchDTO, TimeDTO timeDTO, CustomerDTO customerDTO, double week_amount, Date date_end, Timestamp createdAt, Timestamp updateAt) {
+    public LogReserveDTO(Long id, String type, String status, Date date, PriceDTO price, PitchDTO pitch, TimeDTO time, CustomerDTO customer, Double week_amount, Date date_end, Timestamp createdAt, Timestamp updateAt) {
         this.id = id;
         this.type = type;
         this.status = status;
         this.date = date;
-        this.priceDTO = priceDTO;
-        this.pitchDTO = pitchDTO;
-        this.timeDTO = timeDTO;
-        this.customerDTO = customerDTO;
+        this.price = price;
+        this.pitch = pitch;
+        this.time = time;
+        this.customer = customer;
         this.week_amount = week_amount;
         this.date_end = date_end;
         this.createdAt = createdAt;
@@ -76,43 +78,43 @@ public class LogReserveDTO {
         this.date = date;
     }
 
-    public PriceDTO getPriceDTO() {
-        return priceDTO;
+    public PriceDTO getPrice() {
+        return price;
     }
 
-    public void setPriceDTO(PriceDTO priceDTO) {
-        this.priceDTO = priceDTO;
+    public void setPrice(PriceDTO price) {
+        this.price = price;
     }
 
-    public PitchDTO getPitchDTO() {
-        return pitchDTO;
+    public PitchDTO getPitch() {
+        return pitch;
     }
 
-    public void setPitchDTO(PitchDTO pitchDTO) {
-        this.pitchDTO = pitchDTO;
+    public void setPitch(PitchDTO pitch) {
+        this.pitch = pitch;
     }
 
-    public TimeDTO getTimeDTO() {
-        return timeDTO;
+    public TimeDTO getTime() {
+        return time;
     }
 
-    public void setTimeDTO(TimeDTO timeDTO) {
-        this.timeDTO = timeDTO;
+    public void setTime(TimeDTO time) {
+        this.time = time;
     }
 
-    public CustomerDTO getCustomerDTO() {
-        return customerDTO;
+    public CustomerDTO getCustomer() {
+        return customer;
     }
 
-    public void setCustomerDTO(CustomerDTO customerDTO) {
-        this.customerDTO = customerDTO;
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 
-    public double getWeek_amount() {
+    public Double getWeek_amount() {
         return week_amount;
     }
 
-    public void setWeek_amount(double week_amount) {
+    public void setWeek_amount(Double week_amount) {
         this.week_amount = week_amount;
     }
 
@@ -132,20 +134,4 @@ public class LogReserveDTO {
         this.updateAt = updateAt;
     }
 
-    @Override
-    public String toString() {
-        return "LogReserveDTO{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", date=" + date +
-                ", priceDTO=" + priceDTO +
-                ", pitchDTO=" + pitchDTO +
-                ", timeDTO=" + timeDTO +
-                ", customerDTO=" + customerDTO +
-                ", week_amount=" + week_amount +
-                ", createdAt=" + createdAt +
-                ", updateAt=" + updateAt +
-                '}';
-    }
 }

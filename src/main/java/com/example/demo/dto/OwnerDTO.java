@@ -7,7 +7,6 @@ public class OwnerDTO {
     private String address;
     private String is_block;
     private String is_delete;
-    private String password;
     private String verify;
     private String remember_token;
     private String district;
@@ -22,14 +21,13 @@ public class OwnerDTO {
         this.phone = phone;
     }
 
-    public OwnerDTO(Long id, String name, String phone, String address, String is_block, String is_delete, String password, String verify, String remember_token, String district, Double lat, Double lng) {
+    public OwnerDTO(Long id, String name, String phone, String address, String is_block, String is_delete, String verify, String remember_token, String district, Double lat, Double lng) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.is_block = is_block;
         this.is_delete = is_delete;
-        this.password = password;
         this.verify = verify;
         this.remember_token = remember_token;
         this.district = district;
@@ -85,14 +83,6 @@ public class OwnerDTO {
         this.is_delete = is_delete;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getVerify() {
         return verify;
     }
@@ -133,21 +123,5 @@ public class OwnerDTO {
         this.lng = lng;
     }
 
-    @Override
-    public String toString() {
-        return "OwnerDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", is_block='" + is_block + '\'' +
-                ", is_delete='" + is_delete + '\'' +
-                ", password='" + password + '\'' +
-                ", verify='" + verify + '\'' +
-                ", remember_token='" + remember_token + '\'' +
-                ", district='" + district + '\'' +
-                ", lat=" + lat +
-                ", lng=" + lng +
-                '}';
-    }
+
 }

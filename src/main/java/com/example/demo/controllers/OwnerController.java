@@ -26,7 +26,7 @@ public class OwnerController {
         List<OwnerDTO> list = ownerService.getAllOwner();
         if (list != null)
         return  new Response(ResultCode.SUCCESS,list,ResultCode.STR_SUCCESS);
-        else return new Response(ResultCode.BAD_REQUEST,list,ResultCode.STR_BAD_REQUEST);
+        else return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
     }
 
     /**
@@ -37,7 +37,12 @@ public class OwnerController {
     @GetMapping(value = "/common/get-owner-by-id")
     public Response getOwnerById(@RequestParam Long id) {
         List<OwnerDTO> list = ownerService.getOwnerById(id);
-        return new Response(ResultCode.SUCCESS, list, "OK");
+        if (list != null){
+            return new Response(ResultCode.SUCCESS, list, ResultCode.STR_SUCCESS);
+        }else{
+            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
+        }
+
     }
 
     /**
@@ -47,6 +52,12 @@ public class OwnerController {
      */
     @GetMapping(value = "/common/get-owner-by-district")
     public Response getOwnerByName(@RequestParam String district){
-        return new Response(ResultCode.SUCCESS,ownerService.getOwnerByDistrict(district),"OK");
+        List<OwnerDTO> list = ownerService.getOwnerByDistrict(district);
+        if (list != null){
+            return new Response(ResultCode.SUCCESS,list,ResultCode.STR_SUCCESS);
+        }else{
+            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
+        }
+
     }
 }

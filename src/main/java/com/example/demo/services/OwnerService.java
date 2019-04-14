@@ -32,22 +32,40 @@ public class OwnerService{
     }
 
     public List<OwnerDTO> convertModelToDTO(List<OwnerModel> ownerModels) {
-        List<OwnerDTO> ownerDTOS = new ArrayList<>();
-        for (OwnerModel ownerModel : ownerModels){
-            OwnerDTO ownerDTO = new OwnerDTO();
-            ownerDTO = modelMapper.map(ownerModel,ownerDTO.getClass());
-            ownerDTOS.add(ownerDTO);
+        try {
+            List<OwnerDTO> ownerDTOS = new ArrayList<>();
+            for (OwnerModel ownerModel : ownerModels){
+                OwnerDTO ownerDTO = new OwnerDTO();
+                ownerDTO = modelMapper.map(ownerModel,ownerDTO.getClass());
+                ownerDTOS.add(ownerDTO);
+            }
+            return ownerDTOS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return ownerDTOS;
+
     }
 
     public List<OwnerDTO> getOwnerById(Long id) {
-        List<OwnerModel> ownerModels = ownerRepository.getOwnerModelById(id);
-        return convertModelToDTO(ownerModels);
+        try {
+            List<OwnerModel> ownerModels = ownerRepository.getOwnerModelById(id);
+            return convertModelToDTO(ownerModels);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public List<OwnerDTO> getOwnerByDistrict(String district) {
-        List<OwnerModel> ownerModels = ownerRepository.getOwnerModelByDistrict(district);
-        return convertModelToDTO(ownerModels);
+        try {
+            List<OwnerModel> ownerModels = ownerRepository.getOwnerModelByDistrict(district);
+            return convertModelToDTO(ownerModels);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

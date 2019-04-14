@@ -33,12 +33,18 @@ public class DistrictService{
     }
 
     public List<DistrictDTO> convertModelToDTO(List<DistrictModel> districtModels) {
-        List<DistrictDTO> districtDTOS = new ArrayList<>();
-        for (DistrictModel districtModel: districtModels){
-            DistrictDTO districtDTO = new DistrictDTO();
-            districtDTO = modelMapper.map(districtModel,districtDTO.getClass());
-            districtDTOS.add(districtDTO);
+        try {
+            List<DistrictDTO> districtDTOS = new ArrayList<>();
+            for (DistrictModel districtModel: districtModels){
+                DistrictDTO districtDTO = new DistrictDTO();
+                districtDTO = modelMapper.map(districtModel,districtDTO.getClass());
+                districtDTOS.add(districtDTO);
+            }
+            return districtDTOS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return districtDTOS;
+
     }
 }

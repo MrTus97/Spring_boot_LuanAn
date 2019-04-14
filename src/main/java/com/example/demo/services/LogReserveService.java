@@ -5,15 +5,15 @@ import com.example.demo.dao.repositories.LogReserveRepository;
 import com.example.demo.define.Define;
 import com.example.demo.dto.LogReserveDTO;
 import com.example.demo.dto.PitchDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import net.minidev.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class LogReserveService {
             for (PitchDTO pitchDTO: pitchFollowDistrictAndType){
                 boolean isOk = true;
                 for (LogReserveDTO logReserveDTO: logReserveDTOS){
-                    if (pitchDTO.getId() == logReserveDTO.getPitchDTO().getId()){
+                    if (pitchDTO.getId() == logReserveDTO.getPitch().getId()){
                         isOk = false;
                         break;
                     }
@@ -76,15 +76,8 @@ public class LogReserveService {
 
             //Lấy danh sách đặt sân theo ngày giờ đã chọn (có id sân)
             List<LogReserveModel> logReserveModels =
-                    logReserveRepository.getAllByTimeAndDate(date,
-                            SDateAfter,
-                            idTime);
-            for (LogReserveModel logReserveModel: logReserveModels){
-                LogReserveDTO logReserveDTO = new LogReserveDTO();
-                logReserveDTO = modelMapper.map(logReserveModel,logReserveDTO.getClass());
-                logReserveDTOS.add(logReserveDTO);
-            }
-            return logReserveDTOS;
+                    logReserveRepository.getAllByTimeAndDate(date+"%",idTime);
+            return convertModelToDTO(logReserveModels);
         }catch (Exception ex){
             ex.printStackTrace();
             return null;
@@ -96,15 +89,14 @@ public class LogReserveService {
         try {
             String SDateAfter = Define.dateAfter(date);
             List<LogReserveModel> logReserveModels =
-                    logReserveRepository.getAllByTimeAndDateAndPitch(date,
-                            SDateAfter,
+                    logReserveRepository.getAllByTimeAndDateAndPitch(date + "%",
                             idTime,
                             idPitch);
             JSONObject jsonObject = new JSONObject();
             if (logReserveModels.isEmpty()){
                 LogReserveModel logReserveModel = new LogReserveModel();
-                Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-                logReserveModel.setDate(dDate);
+                Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(SDateAfter);
+                logReserveModel.setDate(Define.convertUtilToSql(dDate));
                 logReserveModel.setId_customer(idCustomer);
                 logReserveModel.setId_pitch(idPitch);
                 logReserveModel.setId_price(idPrice);
@@ -119,5 +111,26 @@ public class LogReserveService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<LogReserveDTO> getLogByIdCustomer(Long idCustomer,int page,int pageSize){
+        try {
+            List<LogReserveModel> list = logReserveRepository.getAllById_customer(idCustomer, PageRequest.of(page-1,pageSize));
+            return convertModelToDTO(list);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private List<LogReserveDTO> convertModelToDTO(List<LogReserveModel> list) {
+        List<LogReserveDTO> logReserveDTOS = new ArrayList<>();
+        for (LogReserveModel logReserveModel: list){
+            LogReserveDTO logReserveDTO = new LogReserveDTO();
+            logReserveDTO = modelMapper.map(logReserveModel,logReserveDTO.getClass());
+            logReserveDTOS.add(logReserveDTO);
+        }
+        return logReserveDTOS;
     }
 }

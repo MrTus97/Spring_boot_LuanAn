@@ -21,17 +21,28 @@ public class PitchTypeService {
 
 
     public List<PitchTypeDTO> getPitchTypeByDistrictAndName(String district, String name){
-        List<PitchTypeModel> pitchTypeModels = pitchTypeRepository.getAllByDistrictAndName(district, name);
-        return convertModelToDTO(pitchTypeModels);
+        try {
+            List<PitchTypeModel> pitchTypeModels = pitchTypeRepository.getAllByDistrictAndName(district, name);
+            return convertModelToDTO(pitchTypeModels);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public List<PitchTypeDTO> convertModelToDTO(List<PitchTypeModel> pitchTypeModels){
-        List<PitchTypeDTO> pitchTypeDTOS = new ArrayList<>();
-        for (PitchTypeModel pitchTypeModel:pitchTypeModels){
-            PitchTypeDTO pitchTypeDTO = new PitchTypeDTO();
-            pitchTypeDTO = modelMapper.map(pitchTypeModel,pitchTypeDTO.getClass());
-            pitchTypeDTOS.add(pitchTypeDTO);
+        try {
+            List<PitchTypeDTO> pitchTypeDTOS = new ArrayList<>();
+            for (PitchTypeModel pitchTypeModel:pitchTypeModels){
+                PitchTypeDTO pitchTypeDTO = new PitchTypeDTO();
+                pitchTypeDTO = modelMapper.map(pitchTypeModel,pitchTypeDTO.getClass());
+                pitchTypeDTOS.add(pitchTypeDTO);
+            }
+            return pitchTypeDTOS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return pitchTypeDTOS;
     }
 }

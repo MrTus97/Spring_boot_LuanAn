@@ -1,5 +1,8 @@
 package com.example.demo.define;
 
+import com.example.demo.services.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +24,7 @@ public class Define {
   public static final String timeYearFromChangeAddAbsence = "-01-01";
 
   public static final String emailDefault = "nals_pmo@nal.com";
+  public static Long idCustomer;
 
   public static String dateAfter(String date){
     try {
@@ -36,7 +40,13 @@ public class Define {
       e.printStackTrace();
       return null;
     }
-
   }
+
+  public static java.sql.Date convertUtilToSql(java.util.Date uDate) {
+    java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+    return sDate;
+  }
+
+
 
 }

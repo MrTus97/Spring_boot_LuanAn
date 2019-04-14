@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.define.Define;
 import com.example.demo.dto.CustomerDTO;
 import com.example.demo.services.CustomerService;
 import com.example.demo.services.JwtService;
@@ -38,6 +39,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
                 boolean accountNonExpired = true;
                 boolean credentialsNonExpired = true;
                 boolean accountNonLocked = true;
+                Define.idCustomer = customerDTO.getId();
                 UserDetails userDetail = new User(phone, customerDTO.getPassword(), enabled, accountNonExpired,
                         credentialsNonExpired, accountNonLocked,customerDTO.getAuthorities());
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail,

@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 
     @Autowired
-    private JwtService jwtService;
-
-    @Autowired
     private CustomerService customerService;
 
     /**

@@ -26,13 +26,19 @@ public class PitchService{
      * @return
      */
     public List<PitchDTO> getPitchByDistrictAndName(String district,String type_name){
-        List<PitchDTO> pitchDTOS = new ArrayList<>();
-        List<PitchModel> pitchModels = pitchRepository.getAllByDistrictAndName(district,type_name);
-        for (PitchModel pitchModel:pitchModels){
-            PitchDTO pitchDTO = new PitchDTO();
-            pitchDTO = modelMapper.map(pitchModel,pitchDTO.getClass());
-            pitchDTOS.add(pitchDTO);
+        try {
+            List<PitchDTO> pitchDTOS = new ArrayList<>();
+            List<PitchModel> pitchModels = pitchRepository.getAllByDistrictAndName(district,type_name);
+            for (PitchModel pitchModel:pitchModels){
+                PitchDTO pitchDTO = new PitchDTO();
+                pitchDTO = modelMapper.map(pitchModel,pitchDTO.getClass());
+                pitchDTOS.add(pitchDTO);
+            }
+            return pitchDTOS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return pitchDTOS;
+
     }
 }

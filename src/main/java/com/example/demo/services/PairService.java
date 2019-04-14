@@ -26,53 +26,72 @@ public class PairService {
     private ModelMapper modelMapper;
 
     public List<PairDTO> getAllPair(int page, int pageSize) {
-        List<PairModel> pairModels = pairRepository.getAllByStatusOrderByCreatedAt("YES", PageRequest.of(page,pageSize));
-        return convertModelToDTO(pairModels);
+        try {
+            List<PairModel> pairModels = pairRepository.getAllByStatusOrderByCreatedAt("YES", PageRequest.of(page,pageSize));
+            return convertModelToDTO(pairModels);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public List<PairDTO> convertModelToDTO(List<PairModel> pairModels){
-        List<PairDTO> pairDTOS = new ArrayList<>();
-        for (PairModel pairModel :pairModels){
-            PairDTO pairDTO = new PairDTO();
-            pairDTO = modelMapper.map(pairModel,pairDTO.getClass());
-            pairDTOS.add(pairDTO);
+        try {
+            List<PairDTO> pairDTOS = new ArrayList<>();
+            for (PairModel pairModel :pairModels){
+                PairDTO pairDTO = new PairDTO();
+                pairDTO = modelMapper.map(pairModel,pairDTO.getClass());
+                pairDTOS.add(pairDTO);
+            }
+            return pairDTOS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return pairDTOS;
+
     }
 
 
     public List<PairDTO> getPairById(Long idCustomer, Optional<Integer> page, Optional<Integer> pageSize) {
-        int evalPageSize = pageSize.orElse(Define.initialPageSize);
-        int evalPage = (page.orElse(0) < 1) ? Define.initialPage : page.get() - 1;
-        List<PairModel> pairModels = pairRepository.getAllByIdCustomer(idCustomer, PageRequest.of(evalPage,evalPageSize));
-        return convertModelToDTO(pairModels);
+        try {
+            int evalPageSize = pageSize.orElse(Define.initialPageSize);
+            int evalPage = (page.orElse(0) < 1) ? Define.initialPage : page.get() - 1;
+            List<PairModel> pairModels = pairRepository.getAllByIdCustomer(idCustomer, PageRequest.of(evalPage,evalPageSize));
+            return convertModelToDTO(pairModels);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public JSONObject postPair(PairModel pairModel) {
-        JSONObject jsonObject = new JSONObject();
         try {
+            JSONObject jsonObject = new JSONObject();
             pairRepository.save(pairModel);
             jsonObject.put("status","OK");
-
+            return jsonObject;
         }catch (Exception ex){
             ex.printStackTrace();
-            jsonObject.put("status",ex.getMessage());
+            return null;
         }
-        return jsonObject;
     }
 
     public JSONObject updateStatus(String status, Long idPair) {
-        JSONObject jsonObject = new JSONObject();
+
         try {
+            JSONObject jsonObject = new JSONObject();
             PairModel pairModel = pairRepository.getById(idPair);
             pairModel.setStatus(status);
             pairRepository.save(pairModel);
             jsonObject.put("status","OK");
+            return jsonObject;
 
         }catch (Exception ex){
             ex.printStackTrace();
-            jsonObject.put("status",ex.getMessage());
+            return null;
         }
-        return jsonObject;
+
     }
 }

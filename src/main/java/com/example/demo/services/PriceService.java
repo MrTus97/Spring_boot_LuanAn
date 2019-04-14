@@ -16,14 +16,20 @@ public class PriceService {
     @Autowired
     private PriceRepository priceRepository;
 
-    public double getPriceOfPitchType(Long idTime,Long idType,String date){
-        JSONObject jsonObject = new JSONObject();
-        List<PriceModel> list = priceRepository.getByTimeAndType(idType,idTime);
-        for (PriceModel priceModel: list){
-            if (priceModel.getDate().toString().contains(date)){
-                return priceModel.getPrice() * priceModel.getRate_of_change();
+    public Double getPriceOfPitchType(Long idTime,Long idType,String date){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            List<PriceModel> list = priceRepository.getByTimeAndType(idType,idTime);
+            for (PriceModel priceModel: list){
+                if (priceModel.getDate().toString().contains(date)){
+                    return priceModel.getPrice() * priceModel.getRate_of_change();
+                }
             }
+            return list.get(0).getPrice();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-        return list.get(0).getPrice();
+
     }
 }

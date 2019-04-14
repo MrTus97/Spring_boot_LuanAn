@@ -1,11 +1,15 @@
 package com.example.demo.controllers;
 
 import com.example.demo.define.ResultCode;
+import com.example.demo.dto.FavoriteAddressDTO;
 import com.example.demo.dto.response.Response;
 import com.example.demo.services.FavoriteAddressService;
 import io.swagger.annotations.ApiParam;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class FavoriteAddressController {
@@ -20,7 +24,13 @@ public class FavoriteAddressController {
     @GetMapping(value = "/personal/get-favorite-by-id-customer")
     public Response getFavoriteByIdCustomer(@RequestParam Long idCustomer
     ){
-        return new Response(200,favoriteAddressService.getFavoriteByIdCustomer(idCustomer),"OK");
+        List<FavoriteAddressDTO> favoriteAddressDTOS = favoriteAddressService.getFavoriteByIdCustomer(idCustomer);
+        if (favoriteAddressDTOS !=null){
+            return new Response(ResultCode.SUCCESS,favoriteAddressDTOS,ResultCode.STR_SUCCESS);
+        }else{
+            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
+        }
+
     }
 
     /**
@@ -33,14 +43,25 @@ public class FavoriteAddressController {
     public Response favoriteOwner(
             @ApiParam("idUser") @RequestParam Long idCustomer,
             @ApiParam("idOwner")@RequestParam Long idOwner){
-        return new Response(ResultCode.SUCCESS, favoriteAddressService.favoriteOwner(idCustomer, idOwner),"OK");
+        JSONObject jsonObject = favoriteAddressService.favoriteOwner(idCustomer, idOwner);
+        if (jsonObject != null){
+            return new Response(ResultCode.SUCCESS, jsonObject,"OK");
+        }else{
+            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
+        }
+
     }
 
     @DeleteMapping(value = "/personal/un-favorite-owner")
     public Response unFavoriteOwner(
         @ApiParam("idFavorite") @RequestParam Long idFavorite
     ){
-        return new Response(ResultCode.SUCCESS,favoriteAddressService.unFavoriteOwner(idFavorite),"OK");
+        JSONObject jsonObject = favoriteAddressService.unFavoriteOwner(idFavorite);
+        if (jsonObject != null){
+            return new Response(ResultCode.SUCCESS, jsonObject,"OK");
+        }else{
+            return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
+        }
     }
 
 }

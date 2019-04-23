@@ -12,9 +12,13 @@ import java.util.List;
 @Repository
 public interface PairRepository extends CrudRepository<PairModel, Long> {
 
-    List<PairModel> getAllByStatusOrderByCreatedAt(String status, Pageable pageable);
 
-    @Query(value = "SELECT * FROM pair WHERE id_customer = ?1",
+    @Query(value = "select * from pair where pair = 'YES' order by created_at desc",
+    countQuery = "select count(*) from pair",
+    nativeQuery = true)
+    List<PairModel> getAllByPairOderOrderByCreatedAtDesc(Pageable pageable);
+
+    @Query(value = "SELECT * FROM pair WHERE id_customer = ?1 order by created_at desc",
             countQuery = "SELECT count(*) FROM pair",
             nativeQuery = true)
     List<PairModel> getAllByIdCustomer(Long id, Pageable pageable);

@@ -18,7 +18,7 @@ public interface FavoriteAddressRepository extends CrudRepository<FavoriteAddres
      * @param idCustomer
      * @return
      */
-    @Query(value = "select * from favorite_address where id_customer=?1",nativeQuery = true)
+    @Query(value = "select * from favorite_address where id_customer=?1 order by created_at desc",nativeQuery = true)
     public List<FavoriteAddressModel> getFavoriteAddressModelByIdCustomer(Long idCustomer);
 
     /**
@@ -44,6 +44,6 @@ public interface FavoriteAddressRepository extends CrudRepository<FavoriteAddres
      * @param idCustomer
      * @return
      */
-    @Query(value = "select * from favorite_address where id_customer=?1 and id_owner=?2",nativeQuery = true)
+    @Query(value = "select * from favorite_address where id_customer=?1 and id_owner=?2 order by created_at desc",nativeQuery = true)
     public FavoriteAddressModel getByIdCustomerAndOwner(Long idCustomer,Long idOwner);
 }

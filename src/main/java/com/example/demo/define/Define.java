@@ -24,6 +24,7 @@ public class Define {
   public static final String timeYearFromChangeAddAbsence = "-01-01";
 
   public static final String emailDefault = "nals_pmo@nal.com";
+  public static final String TYPE_UNSTABLE = "UNSTABLE";
   public static Long idCustomer;
 
   public static String dateAfter(String date){
@@ -32,9 +33,12 @@ public class Define {
       Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
       c.setTime(dDate);
       c.add(Calendar.DATE,1);
-      String SDateAfter = String.valueOf(c.get(Calendar.YEAR)) + "-" +
-              String.valueOf(c.get(Calendar.MONTH)+ 1) + "-" +
-              String.valueOf(c.get(Calendar.DATE));
+      String SDateAfter = String.valueOf(c.get(Calendar.YEAR)) + "-";
+      if (c.get(Calendar.MONTH)+ 1 < 10) SDateAfter += "0" + String.valueOf(c.get(Calendar.MONTH)+ 1);
+      else SDateAfter += String.valueOf(c.get(Calendar.MONTH)+ 1);
+      SDateAfter +="-";
+      if (c.get(Calendar.DATE) < 10) SDateAfter += "0" + String.valueOf(c.get(Calendar.DATE));
+      else SDateAfter += String.valueOf(c.get(Calendar.DATE));
       return SDateAfter;
     }catch (Exception e){
       e.printStackTrace();
@@ -48,5 +52,22 @@ public class Define {
   }
 
 
-
+    public static String dateBefore(String date) {
+      try {
+        Calendar c = Calendar.getInstance();
+        Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        c.setTime(dDate);
+        c.add(Calendar.DATE,-1);
+        String SDateAfter = String.valueOf(c.get(Calendar.YEAR)) + "-";
+        if (c.get(Calendar.MONTH)+ 1 < 10) SDateAfter += "0" + String.valueOf(c.get(Calendar.MONTH)+ 1);
+        else SDateAfter += String.valueOf(c.get(Calendar.MONTH)+ 1);
+        SDateAfter +="-";
+        if (c.get(Calendar.DATE) < 10) SDateAfter += "0" + String.valueOf(c.get(Calendar.DATE));
+        else SDateAfter += String.valueOf(c.get(Calendar.DATE));
+        return SDateAfter;
+      }catch (Exception e){
+        e.printStackTrace();
+        return null;
+      }
+    }
 }

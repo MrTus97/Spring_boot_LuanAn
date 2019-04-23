@@ -29,8 +29,7 @@ public class PairService {
 
     public Response getAllPair(int page, int pageSize) {
         try {
-
-            List<PairModel> pairModels = pairRepository.getAllByStatusOrderByCreatedAt("YES", PageRequest.of(page,pageSize));
+            List<PairModel> pairModels = pairRepository.getAllByPairOderOrderByCreatedAtDesc(PageRequest.of(page-1,pageSize));
             return new Response(ResultCode.SUCCESS,convertModelToDTO(pairModels),ResultCode.STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
@@ -85,7 +84,7 @@ public class PairService {
         }
     }
 
-    public Response updateStatus(String status, Long idPair,Long idCustomer) {
+    public Response updateStatus(String pair, Long idPair,Long idCustomer) {
 
         try {
             if (idCustomer != Define.idCustomer){
@@ -93,7 +92,7 @@ public class PairService {
             }
             JSONObject jsonObject = new JSONObject();
             PairModel pairModel = pairRepository.getById(idPair);
-            pairModel.setStatus(status);
+            pairModel.setPair(pair);
             pairRepository.save(pairModel);
             jsonObject.put("status","OK");
             return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);

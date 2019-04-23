@@ -26,11 +26,12 @@ public class CustomerDTO {
     private String count_cancel;
     private String verify;
     private String remember_token;
+    private String description;
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(Long id, String name, String phone, String team_name, String level, String star, String is_block, String is_delete, String password, String count_reserve, String count_cancel, String verify, String remember_token) {
+    public CustomerDTO(Long id, String name, String phone, String team_name, String level, String star, String is_block, String is_delete, String password, String count_reserve, String count_cancel, String verify, String remember_token, String description) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -44,6 +45,7 @@ public class CustomerDTO {
         this.count_cancel = count_cancel;
         this.verify = verify;
         this.remember_token = remember_token;
+        this.description = description;
     }
 
     public Long getId() {
@@ -150,22 +152,12 @@ public class CustomerDTO {
         this.remember_token = remember_token;
     }
 
-    @Override
-    public String toString() {
-        return "CustomerDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", team_name='" + team_name + '\'' +
-                ", level='" + level + '\'' +
-                ", star='" + star + '\'' +
-                ", is_block='" + is_block + '\'' +
-                ", is_delete='" + is_delete + '\'' +
-                ", count_reserve='" + count_reserve + '\'' +
-                ", count_cancel='" + count_cancel + '\'' +
-                ", verify='" + verify + '\'' +
-                ", remember_token='" + remember_token + '\'' +
-                '}';
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<GrantedAuthority> getAuthorities() {

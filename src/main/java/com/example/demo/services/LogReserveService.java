@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,6 +97,7 @@ public class LogReserveService {
                 return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
             }
             String SDateAfter = Define.dateAfter(date);
+            String SDateBefore = Define.dateBefore(date);
             List<LogReserveModel> logReserveModels =
                     logReserveRepository.getAllByTimeAndDateAndPitch(date + "%",
                             idTime,
@@ -109,6 +111,13 @@ public class LogReserveService {
                 logReserveModel.setId_pitch(idPitch);
                 logReserveModel.setId_price(idPrice);
                 logReserveModel.setId_time(idTime);
+                Date date1 = new Date();
+                logReserveModel.setCreatedAt(new Timestamp(date1.getTime()));
+                logReserveModel.setUpdateAt(new Timestamp(date1.getTime()));
+                logReserveModel.setStatus("NO");
+                logReserveModel.setType(Define.TYPE_UNSTABLE);
+                logReserveModel.setWeek_amount(0.0);
+                logReserveModel.setDate_end(Define.convertUtilToSql(dDate));
                 logReserveRepository.save(logReserveModel);
                 jsonObject.put("status","OK");
             }else{

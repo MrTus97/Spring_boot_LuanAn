@@ -87,4 +87,21 @@ public class CustomerService {
             return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
         }
     }
+
+    public Response updateAccount(Long idCustomer, String name, String teamName, String description) {
+        try {
+            if (idCustomer != Define.idCustomer){
+                return new Response(ACCESS_DENIED,null,STR_ACCESS_DENIED);
+            }
+            CustomerModel customerModel = customerRepository.getById(idCustomer);
+            customerModel.setTeam_name(teamName);
+            customerModel.setName(name);
+            customerModel.setDescription(description);
+            customerRepository.save(customerModel);
+            return new Response(SUCCESS,"OK",STR_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
+        }
+    }
 }

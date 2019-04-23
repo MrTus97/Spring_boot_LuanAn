@@ -20,7 +20,7 @@ public interface PitchRepository extends CrudRepository<PitchModel, Long> {
             nativeQuery = true)
     List<PitchModel> getAllByPitchTypeId(Long id);
 
-    @Query(value = "select * from " +
+    @Query(value = "select pitch.* from " +
             "pitch_type inner join owner on pitch_type.id_owner = owner.id " +
             "inner join pitch on pitch.id_type = pitch_type.id " +
             "where owner.district = ?1 " +

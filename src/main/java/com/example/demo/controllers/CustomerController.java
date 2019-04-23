@@ -42,4 +42,12 @@ public class CustomerController {
         return customerService.verifyAccount(idCustomer);
     }
 
+    @PutMapping(value = "/personal/update-account")
+    public Response updateAccount(@ApiParam("idCustomer") @RequestParam Long idCustomer,
+                                  @ApiParam("name") @RequestParam String name,
+                                  @ApiParam("teamName") @RequestParam String teamName,
+                                  @ApiParam("description") @RequestParam String description){
+        return customerService.updateAccount(idCustomer,name,teamName,description);
+    }
+
 }

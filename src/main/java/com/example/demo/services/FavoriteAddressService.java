@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -39,6 +41,10 @@ public class FavoriteAddressService {
                 FavoriteAddressModel favoriteAddressModel = new FavoriteAddressModel();
                 favoriteAddressModel.setId_owner(idOwner);
                 favoriteAddressModel.setId_customer(idCustomer);
+                java.util.Date date = new java.util.Date();
+                Timestamp timestamp = new Timestamp(date.getTime());
+                favoriteAddressModel.setCreatedAt(timestamp);
+                favoriteAddressModel.setUpdateAt(timestamp);
                 favoriteAddressRepository.save(favoriteAddressModel);
                 jsonObject.put("status","OK");
                 return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);

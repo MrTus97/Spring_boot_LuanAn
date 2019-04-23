@@ -61,12 +61,15 @@ public class CustomerModel implements Serializable {
     @Column(name = "updated_at")
     private java.sql.Timestamp updateAt;
 
+    @Column(name = "description")
+    private String description;
+
 
 
     public CustomerModel() {
     }
 
-    public CustomerModel(String name, String phone, String team_name, String level, String star, String is_block, String is_delete, String password, Double count_reserve, Double count_cancel, String verify, String remember_token, String avatar, Timestamp createdAt, Timestamp updateAt) {
+    public CustomerModel(String name, String phone, String team_name, String level, String star, String is_block, String is_delete, String password, Double count_reserve, Double count_cancel, String verify, String remember_token, String avatar, Timestamp createdAt, Timestamp updateAt, String description) {
         this.name = name;
         this.phone = phone;
         this.team_name = team_name;
@@ -82,6 +85,7 @@ public class CustomerModel implements Serializable {
         this.avatar = avatar;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+        this.description = description;
     }
 
     public Long getId() {
@@ -210,5 +214,13 @@ public class CustomerModel implements Serializable {
 
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

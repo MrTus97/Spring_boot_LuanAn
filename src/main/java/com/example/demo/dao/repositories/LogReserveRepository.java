@@ -18,7 +18,7 @@ public interface LogReserveRepository extends CrudRepository<LogReserveModel, Lo
     @Query(value = "select * from log_reserve where id_time =?2 and date like ?1 and id_pitch=?3",nativeQuery = true)
     List<LogReserveModel> getAllByTimeAndDateAndPitch(String date, Long idTime,Long idPitch);
 
-    @Query(value = "select * from log_reserve where id_customer=?1",
+    @Query(value = "select * from log_reserve where id_customer=?1 order by created_at desc",
             countQuery = "SELECT count(*) FROM log_reserve",nativeQuery = true)
     List<LogReserveModel> getAllById_customer(Long idCustomer, Pageable pageable);
 

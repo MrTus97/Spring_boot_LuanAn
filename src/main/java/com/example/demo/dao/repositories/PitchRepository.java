@@ -2,6 +2,7 @@ package com.example.demo.dao.repositories;
 
 import com.example.demo.dao.models.OwnerModel;
 import com.example.demo.dao.models.PitchModel;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -28,5 +29,8 @@ public interface PitchRepository extends CrudRepository<PitchModel, Long> {
             nativeQuery = true)
     List<PitchModel> getAllByDistrictAndName(String district, String type_name);
 
-
+    @Query(value = "select * from pitch",
+            countQuery = "SELECT count(*) FROM pitch",
+            nativeQuery = true)
+    List<PitchModel> getAllPaging(PageRequest pageRequest);
 }

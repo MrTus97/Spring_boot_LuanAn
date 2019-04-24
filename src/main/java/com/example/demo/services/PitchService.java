@@ -2,9 +2,12 @@ package com.example.demo.services;
 
 import com.example.demo.dao.models.PitchModel;
 import com.example.demo.dao.repositories.PitchRepository;
+import com.example.demo.define.ResultCode;
 import com.example.demo.dto.PitchDTO;
+import com.example.demo.dto.response.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,5 +43,21 @@ public class PitchService{
             return null;
         }
 
+    }
+
+    public Response getAllPitch(int page, int pageSize) {
+        try{
+            List<PitchDTO> pitchDTOS = new ArrayList<>();
+            List<PitchModel> pitchModels = pitchRepository.getAllPaging(PageRequest.of(page,pageSize));
+            for (PitchModel pitchModel:pitchModels){
+                PitchDTO pitchDTO = new PitchDTO();
+                pitchDTO = modelMapper.map(pitchModel,pitchDTO.getClass());
+                pitchDTOS.add(pitchDTO);
+            }
+            return new Response(ResultCode.SUCCESS,pitchDTOS,ResultCode.STR_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

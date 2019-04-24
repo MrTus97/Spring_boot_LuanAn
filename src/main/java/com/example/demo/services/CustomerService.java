@@ -57,14 +57,14 @@ public class CustomerService {
         try {
             CustomerModel customerModel = customerRepository.getByPhone(phone);
             if (customerModel != null){
-                return new Response(BAD_REQUEST,null,"Sđt đăng kí đã tồn tại");
+                return new Response(BAD_REQUEST,null,"Số điện thoại đăng kí đã tồn tại");
             }else{
                 CustomerModel customerModel1 = new CustomerModel();
-                customerModel.setPhone(phone);
-                customerModel.setName(name);
-                customerModel.setTeam_name(teamName);
-                customerModel.setPassword(password);
-                customerRepository.save(customerModel);
+                customerModel1.setPhone(phone);
+                customerModel1.setName(name);
+                customerModel1.setTeam_name(teamName);
+                customerModel1.setPassword(password);
+                customerRepository.save(customerModel1);
                 return new Response(ResultCode.SUCCESS,"Đăng kí thành công",ResultCode.STR_SUCCESS);
             }
         }catch (Exception e){

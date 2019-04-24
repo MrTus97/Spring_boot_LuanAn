@@ -11,4 +11,9 @@ public class PitchController {
     @Autowired
     private PitchService pitchBookingService;
 
+    @GetMapping(value = "/common/get-all-pitch")
+    public Response getAllPitch(@RequestParam int page,
+                                @RequestParam int pageSize){
+        return pitchBookingService.getAllPitch(page-1,pageSize);
+    }
 }

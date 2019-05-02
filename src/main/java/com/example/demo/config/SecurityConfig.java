@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/personal/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.POST, "/personal/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.DELETE, "/personal/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.PUT, "/personal/**").access("hasRole('ROLE_CUSTOMER')")
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());

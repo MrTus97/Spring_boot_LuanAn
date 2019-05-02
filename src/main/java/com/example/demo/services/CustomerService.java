@@ -64,6 +64,13 @@ public class CustomerService {
                 customerModel1.setName(name);
                 customerModel1.setTeam_name(teamName);
                 customerModel1.setPassword(password);
+                customerModel1.setVerify(Define.STR_NO);
+                customerModel1.setIs_block(Define.STR_NO);
+                customerModel1.setIs_delete(Define.STR_NO);
+                customerModel1.setCount_cancel(Define.DEFAULT_NONE);
+                customerModel1.setCount_reserve(Define.DEFAULT_NONE);
+                customerModel1.setLevel("0");
+                customerModel1.setStar("0");
                 customerRepository.save(customerModel1);
                 return new Response(ResultCode.SUCCESS,"Đăng kí thành công",ResultCode.STR_SUCCESS);
             }
@@ -79,12 +86,12 @@ public class CustomerService {
                 return new Response(ACCESS_DENIED,null,STR_ACCESS_DENIED);
             }
             CustomerModel customerModel = customerRepository.getById(idCustomer);
-            customerModel.setVerify("YES");
+            customerModel.setVerify(Define.STR_YES);
             customerRepository.save(customerModel);
             return new Response(SUCCESS,"OK",STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
+            return new Response(BAD_REQUEST,null,e.getMessage());
         }
     }
 
@@ -101,7 +108,7 @@ public class CustomerService {
             return new Response(SUCCESS,"OK",STR_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
-            return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
+            return new Response(BAD_REQUEST,null,e.getMessage());
         }
     }
 }

@@ -28,7 +28,6 @@ public class LogReserveService {
     @Autowired
     private LogReserveRepository logReserveRepository;
 
-
     @Autowired
     private ModelMapper modelMapper;
 
@@ -62,7 +61,7 @@ public class LogReserveService {
                 if (isOk){
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("pitch",pitchDTO);
-                    jsonObject.put("price",priceService.getPriceOfPitchType(idTime,pitchDTO.getPitchType().getId(),date));
+                    jsonObject.put("id_price",priceService.getPriceOfPitchType(idTime,pitchDTO.getPitchType().getId(),date));
                     pitchDTOS.add(jsonObject);
                 }
             }
@@ -77,10 +76,6 @@ public class LogReserveService {
 
     public List<LogReserveDTO> getAllLogByDateAndTime(String date, Long idTime){
         try {
-            List<LogReserveDTO> logReserveDTOS = new ArrayList<>();
-            String SDateAfter = Define.dateAfter(date);
-
-            //Lấy danh sách đặt sân theo ngày giờ đã chọn (có id sân)
             List<LogReserveModel> logReserveModels =
                     logReserveRepository.getAllByTimeAndDate(date+"%",idTime);
             return convertModelToDTO(logReserveModels);
@@ -93,11 +88,13 @@ public class LogReserveService {
 
     public Response reservePitch(Long idCustomer, Long idPitch, Long idPrice, Long idTime, String date) {
         try {
+            Date dDate = new SimpleDateFormat(Define.PATTERN_DATE).parse(date);
+            Date date1 = new Date();
             if (idCustomer != Define.idCustomer){
                 return new Response(ResultCode.ACCESS_DENIED,null,ResultCode.STR_ACCESS_DENIED);
+            } else if (dDate.getTime() < date1.getTime()){
+                return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
             }
-            String SDateAfter = Define.dateAfter(date);
-            String SDateBefore = Define.dateBefore(date);
             List<LogReserveModel> logReserveModels =
                     logReserveRepository.getAllByTimeAndDateAndPitch(date + "%",
                             idTime,
@@ -105,18 +102,16 @@ public class LogReserveService {
             JSONObject jsonObject = new JSONObject();
             if (logReserveModels.isEmpty()){
                 LogReserveModel logReserveModel = new LogReserveModel();
-                Date dDate = new SimpleDateFormat("yyyy-MM-dd").parse(SDateAfter);
                 logReserveModel.setDate(Define.convertUtilToSql(dDate));
                 logReserveModel.setId_customer(idCustomer);
                 logReserveModel.setId_pitch(idPitch);
                 logReserveModel.setId_price(idPrice);
                 logReserveModel.setId_time(idTime);
-                Date date1 = new Date();
                 logReserveModel.setCreatedAt(new Timestamp(date1.getTime()));
                 logReserveModel.setUpdateAt(new Timestamp(date1.getTime()));
-                logReserveModel.setStatus("NO");
+                logReserveModel.setStatus(Define.STR_NO);
                 logReserveModel.setType(Define.TYPE_UNSTABLE);
-                logReserveModel.setWeek_amount(0.0);
+                logReserveModel.setWeek_amount(Define.DEFAULT_NONE);
                 logReserveModel.setDate_end(Define.convertUtilToSql(dDate));
                 logReserveRepository.save(logReserveModel);
                 jsonObject.put("status","OK");
@@ -163,7 +158,7 @@ public class LogReserveService {
             if (logReserveModel != null){
                 //Kiểm tra giờ tại đây
                 logReserveRepository.deleteById(idReserve);
-                return new Response(SUCCESS,"OK",STR_SUCCESS);
+                return new Response(SUCCESS,STR_SUCCESS,STR_SUCCESS);
             }else{
                 return new Response(BAD_REQUEST,null,STR_BAD_REQUEST);
             }

@@ -3,7 +3,6 @@ package com.example.demo.controllers;
 import com.example.demo.define.ResultCode;
 import com.example.demo.dto.response.Response;
 import com.example.demo.services.CustomerService;
-import com.example.demo.services.JwtService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

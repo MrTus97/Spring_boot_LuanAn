@@ -105,8 +105,7 @@ public class FavoriteAddressService {
                 jsonObject.put("status", "OK");
                 return new Response(ResultCode.SUCCESS,jsonObject,ResultCode.STR_SUCCESS);
             } else {
-                jsonObject.put("status", "BAD REQUEST");
-                return new Response(ResultCode.BAD_REQUEST,jsonObject,ResultCode.STR_BAD_REQUEST);
+                return new Response(ResultCode.BAD_REQUEST,null,ResultCode.STR_BAD_REQUEST);
             }
 
         }catch (Exception e){
